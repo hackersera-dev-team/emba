@@ -5226,21 +5226,29 @@ grepit_module_information_disclosure() {
 
     grepit_search "$label" "$description" "binary strings, configs" "$regex" "$outfile" "-i"
 
-    local matches
-    matches=$(grep -aPo "$regex" "${LOG_PATH_MODULE}/${outfile}" 2>/dev/null | sort -u)
+    local log_file="${LOG_PATH_MODULE}/${outfile}"
 
-    if [[ -n "$matches" ]]; then
-      while read -r match; do
+    if [[ -f "$log_file" && -s "$log_file" ]]; then
+      grep -aHnPo "$regex" "$log_file" | grep -v -E 'Grepit state info|Search regex|Searching \(' | sort -u | while IFS=: read -r file line match; do
         [[ -z "$match" ]] && continue
+        local raw_line evidence
+
+        # Safely get the evidence line and ensure UTF-8 compliance
+        raw_line=$(sed -n "${line}p" "$file" 2>/dev/null)
+        evidence=$(printf "%s\n" "$raw_line" | sed 's/\x1b\[[0-9;]*m//g' | tr -d '\r' | iconv -c -t UTF-8 | cut -c1-500)
+
         jq -n \
           --arg type "$label" \
           --arg match "$match" \
           --arg description "$description" \
-          '{type: $type, match: $match, description: $description}' \
+          --arg evidence "$evidence" \
+          '{type: $type, match: $match, description: $description, evidence: $evidence}' \
           >> "${TMP_JSON}"
-      done <<< "$matches"
+        echo "" >> "${TMP_JSON}"
+      done
     fi
   }
+
 
   # === Grepit Rules ===
   grepit_info_json "credentials" "Hardcoded credentials (e.g. admin:1234)" \
@@ -5298,6 +5306,68 @@ grepit_module_information_disclosure() {
   grepit_info_json "backdoor_listener" "Backdoor listener patterns (e.g. nc -l, socat)" \
     '(?i)(nc -l|socat TCP-LISTEN|netcat -l|ncat -l|socat UDP-LISTEN)' \
     "2_general_backdoor_listener.txt"
+
+  grepit_info_json "language" "Language artifacts: CJK, Cyrillic, Arabic, Devanagari, etc." \
+  '([\xE4-\xE9][\x80-\xBF]{2}|\xD0[\x80-\xBF]|\xD1[\x80-\xBF]|\xE0\xA4[\x80-\xBF]|\xD8[\xA0-\xBF]|\xD9[\x80-\x8F])' \
+  "2_general_language.txt"
+  
+  grepit_info_json "reverse_shells" "Reverse shell one-liners or netcat/exec" \
+  '(bash -i >& /dev/tcp/|/bin/bash -c ".*nc .* -e /bin/sh")' \
+  "2_general_reverse_shells.txt"
+
+  grepit_info_json "iot_ids" "MAC addresses, UUIDs, or device identifiers" \
+  '([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})|uuid[:=][0-9a-fA-F-]{36}' \
+  "2_general_iot_ids.txt"
+
+  grepit_info_json "system_commands" "Potentially dangerous system calls" \
+  '(?i)(rm -rf|mkfs|dd if=|mount|chmod 777|chown root|exec sh|eval .+)' \
+  "2_general_system_commands.txt"
+
+  grepit_info_json "frequency_patterns" "All frequency mentions (e.g. 433 MHz, 2.4GHz, 1575.42 MHz)" \
+  '([0-9]{2,5}(\.[0-9]+)?\s*(Hz|kHz|MHz|GHz))' \
+  "2_defense_frequency_patterns.txt"
+
+  grepit_info_json "rf_rx_behavior" "RF listening logic (looped receive, tuning, or SDR binding)" \
+  '((while|for)\s*\(\s*(1|;;)\s*\)\s*\{[^}]*\b(freq|rx|listen|bind|tune|start|read_samples|process_samples)[^\n]*\})|((freq|frequency)[^a-zA-Z0-9]*[0-9]{3,6}(\.[0-9]+)?\s*(Hz|kHz|MHz|GHz))|(rtl_fm|uhd_rx|rx_samples_continuous|gnuradio.*receive)' \
+  "2_defense_rf_rx_behavior.txt"
+
+  grepit_info_json "gps_keywords" "GPS-related control keywords (e.g. geofence, kill switch, lockout)" \
+  '(?i)(geo[_\- ]?fence|kill[_\- ]?switch|fail[_\- ]?safe|no[_\- ]?fly|gps[_\- ]?lockout|emergency[_\- ]?return|mission[_\- ]?abort|restricted[_\- ]?zone)' \
+  "2_defense_gps_keywords.txt"
+
+  grepit_info_json "gps_country_trigger" "Suspicious GPS/country-specific control logic" \
+  '(?i)(iran|china|india|pakistan|north[_\- ]?korea|russia|afghanistan|kashmir|israel|us[a]?)' \
+  "2_defense_gps_country_logic.txt"
+
+  grepit_info_json "gps_array_trigger" "GPS coordinate arrays used for region triggers" \
+  '\{[0-9]{1,3}\.[0-9]+,\s*[0-9]{1,3}\.[0-9]+(,\s*[0-9]{1,3}\.[0-9]+){0,1}\}' \
+  "2_defense_gps_coord_arrays.txt"
+
+  grepit_info_json "gps_region_trigger" "GPS region trigger logic (e.g. if lat > 40.0)" \
+  '(?i)(if\s*\(\s*lat\s*>\s*[0-9]{1,3}\.[0-9]+\s*\)|if\s*\(\s*lon\s*<\s*[0-9]{1,3}\.[0-9]+\s*\)|if\s*\(\s*lat\s*==\s*[0-9]{1,3}\.[0-9]+\s*\)\s*\{[^}]*\b(gps|geofence|region|zone)[^\n]*\})' \
+  "2_defense_gps_region_trigger.txt"
+
+  grepit_info_json "gps_control_logic" "GPS control logic (e.g. if gps == true)" \
+  '(?i)(if\s*\(\s*gps\s*==\s*true\s*\)\s*\{[^}]*\b(gps|geofence|region|zone)[^\n]*\})|(\b(gps|geofence|region|zone)\s*=\s*true\s*;)' \
+  "2_defense_gps_control_logic.txt"
+
+  grepit_info_json "gps_data_format" "GPS data format (e.g. NMEA, GPX, KML)" \
+  '(?i)(nmea|gpx|kml|gpsd|ublox|rtcm|gpsbabel|gpspipe|gpsmon|gpsctl)' \
+  "2_defense_gps_data_format.txt"
+
+  grepit_info_json "debug_uart_console" "Exposed UART, serial debug, or bootloader console entries" \
+  '(?i)(console=tty[A-Z]*[0-9]+|ttyS[0-9]+|ttyUSB[0-9]+|ttyAMA[0-9]+|serial_console|boot_console|UART_DEBUG|debug_uart|JTAG_CONSOLE)' \
+  "2_defense_uart_debug_console.txt"
+
+  grepit_info_json "continuous_transmit" "Continuous or looped data transmission to frequency, satellite, or uplink" \
+    '((while|for)\s*\(\s*(1|;;)\s*\)[^\n]*\{[^\}]{0,200}?(tx|send|transmit|write|uhd_tx|send_samples|uplink|push_packet|sdr_tx|satcom)[^\n;]*[;\}])|((tx_freq|tx_rate|uplink_freq|uhf_freq)[^a-zA-Z0-9]{0,5}[0-9]{3,10}(\.[0-9]+)?\s*(Hz|MHz|GHz))' \
+    "2_defense_continuous_transmit.txt"
+
+  grepit_info_json "transmit_scheduler" "Scheduled transmit via timers, cron, threads or interrupts" \
+    '(?i)(timer_init|schedule_tx|tx_timer|create_tx_thread|pthread.*tx|cron_tx|task_tx_loop|tx_interval)' \
+    "2_defense_tx_scheduler.txt"
+  
+  
 
   # === Finalize JSON output ===
   if [[ -s "${TMP_JSON}" ]]; then
