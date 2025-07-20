@@ -5101,6 +5101,8 @@ grepit_version_extract() {
 
 
 grepit_module_defense() {
+  print_output "[*] Starting Grepit Defense module"
+
   : "${TOOL_PATH:=/home/vikash/tools/emba}"
 
   local VERSION_JSON_OUT="${LOG_DIR}/grepit_versions_combined.json"
@@ -5208,6 +5210,105 @@ grepit_module_defense() {
   fi
 }
 
+grepit_module_information_disclosure() {
+  print_output "[*] Starting Grepit Information Disclosure module"
 
+  local TMP_JSON="${LOG_PATH_MODULE}/grepit_info_disclosure.json.tmp"
+  local OUT_JSON="${LOG_PATH_MODULE}/grepit_info_disclosure.json"
+  : > "${TMP_JSON}"
+
+  # Internal wrapper to store matches in both .txt and JSON
+  grepit_info_json() {
+    local label="$1"
+    local description="$2"
+    local regex="$3"
+    local outfile="$4"
+
+    grepit_search "$label" "$description" "binary strings, configs" "$regex" "$outfile" "-i"
+
+    local matches
+    matches=$(grep -aPo "$regex" "${LOG_PATH_MODULE}/${outfile}" 2>/dev/null | sort -u)
+
+    if [[ -n "$matches" ]]; then
+      while read -r match; do
+        [[ -z "$match" ]] && continue
+        jq -n \
+          --arg type "$label" \
+          --arg match "$match" \
+          --arg description "$description" \
+          '{type: $type, match: $match, description: $description}' \
+          >> "${TMP_JSON}"
+      done <<< "$matches"
+    fi
+  }
+
+  # === Grepit Rules ===
+  grepit_info_json "credentials" "Hardcoded credentials (e.g. admin:1234)" \
+    'admin[:=][^[:space:]]+|root[:=][^[:space:]]+|user=.*&pass=.*|password[:=][^[:space:]]+|passwd[:=][^[:space:]]+|pwd[:=][^[:space:]]+' \
+    "2_general_hardcoded_credentials.txt"
+
+  grepit_info_json "tokens" "Secrets, JWTs, API keys (e.g. slack_token=...)" \
+    'slack_token[^[:space:]]+|AKIA[0-9A-Z]{16}|eyJ[A-Za-z0-9_-]+\.[A-Za-z0-9._-]+\.[A-Za-z0-9_-]+|AIza[0-9A-Za-z\-_]{35}' \
+    "2_general_secrets_tokens.txt"
+
+  grepit_info_json "private_keys" "Detected private key blocks" \
+    '-----BEGIN (RSA|DSA|EC|OPENSSH|PGP|PRIVATE) KEY-----' \
+    "2_general_private_keys.txt"
+
+  grepit_info_json "debug_strings" "Debug/trace level keywords or log flags" \
+    '(?i)(debug|trace|log_level)[:= ]|printk\(".*"\)' \
+    "2_general_debug_strings.txt"
+
+  grepit_info_json "internal_urls" "Internal URLs, dev endpoints, IPs" \
+    '(https?://)?(localhost|127\.0\.0\.1|10\.\d+\.\d+\.\d+|192\.168\.\d+\.\d+|dev\.[a-z0-9.-]+|internal\.[a-z0-9.-]+)|/debug\.cgi' \
+    "2_general_internal_urls.txt"
+
+  grepit_info_json "emails" "Hardcoded or internal email addresses" \
+    '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|org|net|local)' \
+    "2_general_email_addresses.txt"
+  
+  grepit_info_json "gps_coordinates" "GPS coordinates in various formats" \
+    '(\d{1,3}\.\d+,\s*\d{1,3}\.\d+|\d{1,3}\s*\.\s*\d{1,3}\s*\.\s*\d{1,3}\s*\.\s*\d{1,3})' \
+    "2_general_gps_coordinates.txt"
+  
+  grepit_info_json "sensitive_files" "Sensitive file paths (e.g. /etc/passwd, /var/log/)" \
+    '(/etc/passwd|/var/log/|/root/|/home/[^/]+/|/tmp/|/dev/null|/proc/self/cwd|/proc/self/exe|/proc/self/fd/\d+)' \
+    "2_general_sensitive_files.txt" 
+  
+  grepit_info_json "config_files" "Configuration files (e.g. .env, config.yaml)" \
+    '(\.env|config\.yaml|config\.json|settings\.ini|application\.properties|config\.xml|docker-compose\.yml)' \
+    "2_general_config_files.txt"  
+  
+  grepit_info_json "version_info" "Version information (e.g. version.txt, release notes)" \
+    '(version\.txt|release-notes\.txt|CHANGELOG\.md|VERSION\.txt|VERSION\.json|version\.json)' \
+    "2_general_version_info.txt"  
+  
+  grepit_info_json "gnss_telemetry" "GNSS telemetry data (e.g. GPS, GLONASS)" \
+    '(?i)\b(GNSS|GPS|GLONASS|Galileo|BeiDou|QZSS)\b' \
+    "2_general_gnss_telemetry.txt"  
+  
+  grepit_info_json "debug_commands" "Debug flags (e.g. --debug, --verbose)" \
+    '(?i)(--debug|--verbose|--trace|--log-level|--log-file|--show-config|--print-env|--dump-state)' \
+    "2_general_debug_commands.txt"  
+  
+  grepit_info_json "persistent_backdoors" "Persistence mechanisms (e.g. cron jobs, init scripts)" \
+    '(?i)(cron|systemd|init\.d|rc\.local|at\.d|crontab|systemctl enable)' \
+    "2_general_persistent_backdoors.txt"
+  
+  grepit_info_json "backdoor_listener" "Backdoor listener patterns (e.g. nc -l, socat)" \
+    '(?i)(nc -l|socat TCP-LISTEN|netcat -l|ncat -l|socat UDP-LISTEN)' \
+    "2_general_backdoor_listener.txt"
+
+  # === Finalize JSON output ===
+  if [[ -s "${TMP_JSON}" ]]; then
+    jq -s '.' "${TMP_JSON}" > "${OUT_JSON}" && rm -f "${TMP_JSON}"
+    print_output "[+] Grepit information disclosure JSON saved: ${OUT_JSON}"
+  else
+    rm -f "${TMP_JSON}"
+    print_output "[*] No disclosure patterns detected"
+  fi
+
+  module_end_log "${FUNCNAME[0]}" 0
+}
 
 
