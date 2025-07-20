@@ -1,41 +1,10 @@
 #!/bin/bash -p
 
 # EMBA - EMBEDDED LINUX ANALYZER
-#
-# Copyright 2020-2025 Siemens Energy AG
-# Copyright 2020-2023 Siemens AG
-#
-# EMBA comes with ABSOLUTELY NO WARRANTY. This is free software, and you are
-# welcome to redistribute it under the terms of the GNU General Public License.
-# See LICENSE file for usage of this software.
-#
-# EMBA is licensed under GPLv3
-# SPDX-License-Identifier: GPL-3.0-only
-#
-# The original code (from line 187 till the end of the file) from the CRASS project is licensed the following way:
-# ----------------------------------------------------------------------------
-# "THE BEER-WARE LICENSE" (Revision 42):
-# <floyd at floyd dot ch> wrote this file. As long as you retain this notice you
-# can do whatever you want with this stuff. If we meet some day, and you think
-# this stuff is worth it, you can buy me a beer in return
-# floyd http://floyd.ch @floyd_ch <floyd at floyd dot ch>
-# July 2013
-# ----------------------------------------------------------------------------
-#
-# Original Author: Floyd - https://github.com/floyd-fuh
-# EMBA Author(s): Michael Messner, Pascal Eckmann
-
-# Description:  Initial implementation of the great grepit tool from CRASS (code review audit script scanner)
-#               CRASS: https://github.com/floyd-fuh/crass/
-#               Grepit: https://github.com/floyd-fuh/crass/blob/master/grep-it.sh
-#               Original grepit description:
-#               A simple greper for code, loot, IT-tech-stuff-the-customer-throws-at-you.
-#               Tries to find IT security and privacy related stuff.
 
 # shellcheck disable=SC2016
 
 S99_grepit() {
-
   module_log_init "${FUNCNAME[0]}"
 
   if [[ "${QUICK_SCAN:-0}" -eq 1 ]]; then
@@ -45,38 +14,39 @@ S99_grepit() {
 
   module_title "Intelligent grepit module"
   print_output "Running intelligent grepit module for identification of interesting spots within the firmware ..." "no_log"
-
   pre_module_reporter "${FUNCNAME[0]}"
 
   local lWAIT_PIDS_S99_ARR=()
   local lGREPIT_MODULES_ARR=()
   local lGREPIT_RESULTS=0
-
   local lMAX_MOD_THREADS=1
   local lMEM_LIMIT=$(( "${TOTAL_MEMORY}"/3 ))
 
-
-  # grepit options:
-  # Sometimes we look for composite words with wildcard, eg. root.{0,20}detection, this is the maximum
-  # of random characters that can be in between. The higher the value the more strings will potentially be flagged.
   export WILDCARD_SHORT=20
   export WILDCARD_LONG=200
-  # Weird grep behaviour with clearing to the end of line -.-
-  # This variable prevents this behaviour
   export GREP_COLORS=ne
-  # sometimes we have so many results. We need to limit it a bit
-  # -m is limit per file and in this case per grep search per file
   local lLIMIT_GREP=(-m 100)
-  # Do not remove -rP if you don't know what you are doing, otherwise you probably break this script
   local lGREP_ARGUMENTS=(-a -n -A 1 -B 3 -rP)
-  # Open the colored outputs with "less -R" or cat, otherwise remove --color=always (not recommended, colors help to find the matches in huge text files)
   local lCOLOR_ARGUMENTS=("--color=always")
   export STANDARD_GREP_ARGUMENTS=("${lGREP_ARGUMENTS[@]}" "${lCOLOR_ARGUMENTS[@]}" "${lLIMIT_GREP[@]}")
   export ENABLE_LEAST_LIKELY=0
 
-  mapfile -t lGREPIT_MODULES_ARR < <(grep -E "^grepit_module.*\(\) " "${MOD_DIR}"/"${FUNCNAME[0]}".sh | sed -e 's/()\ .*//g' | sort -u)
-  print_output "[*] Loaded ${ORANGE}${#lGREPIT_MODULES_ARR[@]}${NC} grepit modules\n"
+  # Load all grepit module function names
+  mapfile -t lGREPIT_MODULES_ARR < <(grep -E "^grepit_module.*\(\) " "${MOD_DIR}/${FUNCNAME[0]}.sh" | sed -e 's/()\ .*//g' | sort -u)
 
+  # If GREPIT_INCLUDE_ONLY is set, filter the modules to run
+  if [[ -n "${GREPIT_INCLUDE_ONLY}" ]]; then
+    local lFILTERED_MODULES=()
+    for mod in "${lGREPIT_MODULES_ARR[@]}"; do
+      for inc in ${GREPIT_INCLUDE_ONLY}; do
+        [[ "${mod}" == "${inc}" ]] && lFILTERED_MODULES+=( "${mod}" )
+      done
+    done
+    lGREPIT_MODULES_ARR=( "${lFILTERED_MODULES[@]}" )
+    print_output "[*] Filtered grepit modules: ${ORANGE}${GREPIT_INCLUDE_ONLY}${NC}" "no_log"
+  fi
+
+  print_output "[*] Loaded ${ORANGE}${#lGREPIT_MODULES_ARR[@]}${NC} grepit modules\n"
   write_csv_log "Grepit test" "Number of results" "Used args for grep" "Regex used" "Grepit comment"
 
   if [[ ${THREADED} -eq 1 ]]; then
@@ -87,20 +57,18 @@ S99_grepit() {
       store_kill_pids "${lTMP_PID}"
       max_pids_protection "${lMAX_MOD_THREADS}" lWAIT_PIDS_S99_ARR
     done
+    wait_for_pid "${lWAIT_PIDS_S99_ARR[@]}"
   else
     for GREPIT_MODULE in "${lGREPIT_MODULES_ARR[@]}"; do
       "${GREPIT_MODULE}"
     done
   fi
 
-  [[ ${THREADED} -eq 1 ]] && wait_for_pid "${lWAIT_PIDS_S99_ARR[@]}"
-
   grepit_reporter
 
-  lGREPIT_RESULTS=$(grep -v -c -E "\ Searching\ \(" "${LOG_PATH_MODULE}"/[0-9]_* | cut -d: -f2 | paste -sd+ | bc || true)
+  lGREPIT_RESULTS=$(grep -v -c -E "\ Searching\ \(" "${LOG_PATH_MODULE}"/[0-9]_* 2>/dev/null | cut -d: -f2 | paste -sd+ | bc || true)
   print_output "\n"
   print_output "[*] Found ${ORANGE}${lGREPIT_RESULTS}${NC} results via grepit."
-
   module_end_log "${FUNCNAME[0]}" "${lGREPIT_RESULTS}"
 }
 
@@ -5066,3 +5034,144 @@ grepit_module_general() {
   "7_general_sleep_generic.txt" \
   "-i"
 }
+
+grepit_version_extract() {
+  local NAME="$1"
+  local REGEX="$2"
+  local OUTFILE="$3"
+  local DETECTION="$4"
+  local SAMPLE="$5"
+  local VERSION_JSON_TEMP="${LOG_DIR}/grepit_versions_combined.json.tmp"
+
+  grepit_search \
+    "${NAME} version pattern" \
+    "${SAMPLE}" \
+    "binary strings, ELF symbols or banner" \
+    "${REGEX}" \
+    "${OUTFILE}" \
+    "-i"
+
+  local MATCHES
+  MATCHES=$(grep -aPo "${REGEX}" "${LOG_PATH_MODULE}/${OUTFILE}" 2>/dev/null | sort -u)
+
+  if [[ -n "${MATCHES}" ]]; then
+    while read -r VER; do
+      [[ -z "$VER" ]] && continue
+      local DEDUP_KEY="${NAME}::${VER}"
+      if grep -q "\"${NAME}\".*\"${VER}\"" "${VERSION_JSON_TEMP}" 2>/dev/null; then
+        continue
+      fi
+      jq -n \
+        --arg name "${NAME}" \
+        --arg version "${VER}" \
+        --arg detection "${DETECTION}" \
+        '{component: $name, version: $version, detection: $detection}' \
+        >> "${VERSION_JSON_TEMP}"
+    done <<< "${MATCHES}"
+  fi
+}
+
+grepit_module_defense() {
+  local VERSION_JSON_OUT="${LOG_DIR}/grepit_versions_combined.json"
+  local VERSION_JSON_TEMP="${VERSION_JSON_OUT}.tmp"
+  : > "${VERSION_JSON_TEMP}"  # Clear temp JSON buffer
+
+  # === Backdoor Detection ===
+  grepit_search \
+    "Drone/MIL backdoor trigger keywords" \
+    '[Backdoor Triggered] UID:' \
+    'debug log with UID shown' \
+    "fieldop|milops#2025|/etc/init.d/.remote_init|remote shell|nc[\s-]+l[\s-]+p[\s0-9]+[\s-]+e[\s-]+/bin/sh|reboot -f|back.{0,${WILDCARD_SHORT}}door|Actuating flaps|EMERGENCY OVERRIDE" \
+    "3_mil_backdoor.txt" \
+    "-i"
+
+  # === Component Pattern Table ===
+  local -A COMPONENT_PATTERNS=(
+    [busybox]='(?i)busybox[ _-]?v?([0-9]+\.[0-9]+\.[0-9]+)'
+    [openssl]='(?i)openssl[ _-]?([0-9]+\.[0-9]+\.[0-9]+[a-z]?)'
+    [libssl]='libssl\.so\.([0-9]+\.[0-9]+\.[0-9][a-z]?)'
+    [uclibc]='(?i)uclibc[ _-]?v?([0-9]+\.[0-9]+\.[0-9]+)'
+    [dropbear]='(?i)dropbear[ _-]?v?([0-9]{4}\.[0-9]+)'
+    [glibc]='GLIBC_([0-9]+\.[0-9]+)'
+    [libc]='(?i)libc[ _-]?v?([0-9]+\.[0-9]+)'
+    [libm]='(?i)libm[ _-]?([0-9]+\.[0-9]+)'
+    [libpthread]='(?i)libpthread[ _-]?([0-9]+\.[0-9]+)'
+    [libz]='(?i)libz[ _-]?([0-9]+\.[0-9]+)'
+    [libcrypto]='(?i)libcrypto[ _-]?([0-9]+\.[0-9]+\.[0-9]+[a-z]?)'
+    [libcurl]='(?i)libcurl[ _-]?([0-9]+\.[0-9]+\.[0-9]+)'
+    [libexpat]='(?i)libexpat[ _-]?([0-9]+\.[0-9]+\.[0-9]+)'
+    [libpng]='(?i)libpng[ _-]?([0-9]+\.[0-9]+\.[0-9]+)'
+    [libjpeg]='(?i)libjpeg[ _-]?([0-9]+[a-z]?)'
+    [libwebp]='(?i)libwebp[ _-]?([0-9]+\.[0-9]+\.[0-9]+)'
+    [libtiff]='(?i)libtiff[ _-]?([0-9]+\.[0-9]+\.[0-9]+)'
+    [libsqlite3]='(?i)libsqlite3[ _-]?([0-9]+\.[0-9]+\.[0-9]+)'
+    [libxml2]='(?i)libxml2[ _-]?([0-9]+\.[0-9]+\.[0-9]+)'
+    [libffi]='(?i)libffi[ _-]?([0-9]+\.[0-9]+)'
+  )
+
+  for component in "${!COMPONENT_PATTERNS[@]}"; do
+    local regex="${COMPONENT_PATTERNS[$component]}"
+    local outfile="3_mil_${component}_version.txt"
+
+    # Search firmware
+    grepit_search \
+      "${component} version pattern" \
+      "${component}" \
+      "ELF string, embedded constant or config" \
+      "${regex}" \
+      "${outfile}" \
+      "-i"
+
+    # Dedup and write
+    grep -aPo "${regex}" "${LOG_PATH_MODULE}/${outfile}" 2>/dev/null | sort -u | while read -r ver; do
+      [[ -z "$ver" ]] && continue
+      grep -q "\"${component}\".*\"${ver}\"" "${VERSION_JSON_TEMP}" 2>/dev/null && continue
+      jq -n \
+        --arg name "${component}" \
+        --arg version "${ver}" \
+        --arg detection "grepit" \
+        '{component: $name, version: $version, detection: $detection}' \
+        >> "${VERSION_JSON_TEMP}"
+    done
+  done
+
+  # === Embedded SBOM JSON-Style Parsing ===
+  local EMBEDDED_JSON_FILE="3_mil_embedded_sbom.json"
+  local EMBEDDED_REGEX='"name"\s*:\s*"([^"]+)"\s*,\s*"version"\s*:\s*"([^"]+)"'
+
+  grepit_search \
+    "Embedded SBOM JSON components" \
+    '"name": "busybox", "version": "1.35.0"' \
+    'JSON section in firmware' \
+    "${EMBEDDED_REGEX}" \
+    "${EMBEDDED_JSON_FILE}" \
+    "-i"
+
+  if [[ -f "${LOG_PATH_MODULE}/${EMBEDDED_JSON_FILE}" ]]; then
+    grep -aPo "${EMBEDDED_REGEX}" "${LOG_PATH_MODULE}/${EMBEDDED_JSON_FILE}" | while read -r line; do
+      local name version
+      name=$(echo "$line" | grep -oP '"name"\s*:\s*"\K[^"]+')
+      version=$(echo "$line" | grep -oP '"version"\s*:\s*"\K[^"]+')
+      [[ -n "$name" && -n "$version" ]] || continue
+      grep -q "\"${name}\".*\"${version}\"" "${VERSION_JSON_TEMP}" 2>/dev/null && continue
+      jq -n \
+        --arg name "$name" \
+        --arg version "$version" \
+        --arg detection "embedded_sbom_json" \
+        '{component: $name, version: $version, detection: $detection}' \
+        >> "${VERSION_JSON_TEMP}"
+    done
+  fi
+
+  # === Finalize ===
+  if [[ -s "${VERSION_JSON_TEMP}" ]]; then
+    jq -s '.' "${VERSION_JSON_TEMP}" > "${VERSION_JSON_OUT}" && rm -f "${VERSION_JSON_TEMP}"
+    print_output "[+] Combined Grepit SBOM JSON saved to: ${VERSION_JSON_OUT}"
+  else
+    rm -f "${VERSION_JSON_TEMP}" "${VERSION_JSON_OUT}"
+  fi
+}
+
+
+
+

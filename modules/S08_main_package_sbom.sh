@@ -30,11 +30,12 @@ S08_main_package_sbom() {
   local lS08_SUBMODULE=""
 
   mapfile -t lS08_SUBMODULES_FILES_ARR < <(find "${lS08_SUBMODULE_PATH}" -type f -name "S08_*.sh")
-  for lS08_SUBMODULE in "${lS08_SUBMODULES_FILES_ARR[@]}"; do
+    for lS08_SUBMODULE in "${lS08_SUBMODULES_FILES_ARR[@]}"; do
     print_output "[*] SBOM - loading sub module ${lS08_SUBMODULE}" "no_log"
-    # shellcheck source=/dev/null
     source "${lS08_SUBMODULE}"
+    [[ "${S08_MODULES_ARR[*]}" =~ "S08_submodule_grepit_version_parser" ]] || S08_MODULES_ARR+=( "S08_submodule_grepit_version_parser" )
   done
+
 
   # shellcheck disable=SC2153
   check_for_s08_csv_log "${S08_CSV_LOG}"

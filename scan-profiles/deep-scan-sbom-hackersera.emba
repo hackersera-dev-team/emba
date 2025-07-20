@@ -1,0 +1,46 @@
+# HackersEra - Deep SBOM + VEX + Grepit Profile (no emulation)
+# Designed for Automotive, IoT, Embedded & Defense firmware
+
+export FORMAT_LOG=1
+export ENABLE_GREP=1
+export THREADED=1
+export SHORT_PATH=1
+export HTML=1
+export YARA=1
+export BINARY_EXTENDED=1
+export MAX_EXT_CHECK_BINS=100
+export FULL_TEST=1
+
+# Deep extraction enabled
+export DISABLE_DEEP=0
+export DEEP_EXT_DEPTH=50
+
+# Include ELF + untracked binaries
+export SBOM_MINIMAL=0
+export SBOM_UNTRACKED_FILES=2
+export SBOM_MAX_FILE_LOG=50000
+
+# Disable QEMU emulation for speed/safety
+export QEMULATION=0
+
+# Enable all preprocessing + SBOM + VEX + Grepit + YARA modules
+export SELECT_MODULES+=( "S06" "S08" "S09" "S24" "S25" "S110" )                   # SBOM + YARA
+export SELECT_MODULES+=( "F15" )                                                 # Binary metadata
+export SELECT_MODULES+=( "F17" "F50" )                                           # VEX
+export SELECT_MODULES+=( "S99" )                                                 # Grepit
+
+
+# Optional: Silent output + status
+export DISABLE_STATUS_BAR=0
+export SILENT=1
+export DISABLE_NOTIFICATIONS=1
+export DISABLE_DOTS=1
+
+# Show modules only outside Docker
+if [[ $IN_DOCKER -ne 1 ]] ; then
+  print_output "$(indent "$(orange "HackersEra Deep SBOM + VEX + Grepit Scan Profile")")" "no_log"
+  for MODULE_ in "${SELECT_MODULES[@]}"; do
+    print_output "$(indent "$(orange "Enabled module: $MODULE_")")" "no_log"
+  done
+  export USE_DOCKER=1
+fi
