@@ -33,12 +33,12 @@ set_defaults() {
   export CONTAINER_EXTRACT=0
   export DISABLE_DEEP=0
   export DEEP_EXTRACTOR="unblob"  # binwalk/unblob
-  export DEEP_EXT_DEPTH=4
-  export FACT_EXTRACTOR=0
+  export DEEP_EXT_DEPTH=12
+  export FACT_EXTRACTOR=1
   export FIRMWARE=0
   export FORCE=0
   export FORMAT_LOG=0
-  export HTML=0
+  export HTML=1
   export IN_DOCKER=0
   export USE_DOCKER=1
   export KERNEL=0
@@ -95,7 +95,7 @@ set_defaults() {
   export SHORT_PATH=0           # short paths in cli output
   export THREADED=1             # 0 -> single thread
                                 # 1 -> multi threaded
-  export YARA=0                 # default: disable yara tests
+  export YARA=1                 # default: disable yara tests
   export OVERWRITE_LOG=0        # automatically overwrite log directory, if necessary
   export MAX_EXT_SPACE=110000   # ensure we do not stop on extraction. If you are running into disk space issues you can adjust this variable
   export LOG_DIR="${INVOCATION_PATH}""/logs"
