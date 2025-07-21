@@ -1,0 +1,13 @@
+[[0;33m*[0m] Searching (args for grep: [0;33m-i[0m) for [0;33m(\d{1,3}\.\d+,\s*\d{1,3}\.\d+|\d{1,3}\s*\.\s*\d{1,3}\s*\.\s*\d{1,3}\s*\.\s*\d{1,3})[0m.
+[[0;33m*[0m] Grepit state info - comment: [0;33mgps_coordinates[0m
+[[0;33m*[0m] Grepit state info - Filename [0;33m2_general_gps_coordinates.txt[0m
+[[0;33m*[0m] Grepit state info - Example: [0;33mGPS coordinates in various formats[0m
+[[0;33m*[0m] Grepit state info - False positive example: [0;33mbinary strings, configs[0m
+[[0;33m*[0m] Grepit state info - Grep args: [0;33m-i[0m
+[[0;33m*[0m] Grepit state info - Search regex: [0;33m(\d{1,3}\.\d+,\s*\d{1,3}\.\d+|\d{1,3}\s*\.\s*\d{1,3}\s*\.\s*\d{1,3}\s*\.\s*\d{1,3})[0m
+
+[32m11[m[36m-[mt;RUHSHHEMU]E\EfZY^EE\EfZtYp^EEb^fH~fHngEE=f(^fH~fHn>f(YmmfZMY^fH~fHnEfZMYf(^fH~fHngf(Y}}E^fH~fHnYEEEjf(^fH~fHnkYEXEED\EfH~fHn`fH~HEfHnMfH~fHnfHn	YH]UH66]UHEME6Ex6]UHHEM
+[32m12[m[36m-[mkUHb5]UH}EX5}t'}t}u	H6H6H2H0HE]UH5]UHH EM4
+[32m13[m[36m-[m
+[32m14[m[36m:[m9UHH dH%(HE1HFHǅ\HHAHH&HǸHHHEdH+%(tUHHcHigfffH ))ʅ]UH-]UH.]UH
+[32m15[m[36m-[mK(rHh##(PH`hk|gzRx&D$4h FJw?9*3$"\`tX9

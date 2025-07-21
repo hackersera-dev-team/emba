@@ -1,0 +1,70 @@
+[[0;34m+[0m] [0;36m[1mBinary firmware deep extractor[0m
+[1m=================================================================[0m
+This module extracts firmware with all available extractors and checks if a root filesystem can be found.
+As last resort EMBA will try to extract every available file multiple times.
+
+
+
+
+[0;34m==>[0m [0;36mDeep extraction mode[0m
+-----------------------------------------------------------------
+[[0;31m-[0m] No /logs/csv_logs/p99_prepare_analyzer.csv log file available ... trying to create it now
+[[0;33m*[0m] Root directory auto detection for [0;33m/logs/firmware[0m (could take some time)
+
+[[0;33m*[0m] Found no real root directory - setting it to: [0;33m/logs/firmware[0m via [0;33mlast resort[0m.
+[[0;33m*[0m] Deep extraction - 1st round
+[[0;33m*[0m] Walking through all files and try to extract what ever possible
+[[0;33m*[0m] Unique and limited file array generation for [0;33m/logs/firmware[0m
+
+[[0;33m*[0m] Details of file: [0;33m/logs/firmware/firmware[0m
+    [0;33mELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, BuildID[sha1]=af877ee1644025f02b43fafcc118e72b0bb20481, for GNU/Linux 3.2.0, with debug_info, not stripped[0m
+    [0;33m5491a5a753f0c214d5ae8e98ed9c3cbe  /logs/firmware/firmware[0m
+[[0;32m+[0m][0;32m Identified ELF file - performing binary tests on this ELF file[0m
+
+
+
+
+[0;34m==>[0m [0;36mAnalyze binary firmware firmware with unblob[0m
+-----------------------------------------------------------------
+[[0;33m*[0m] Extracting binary blob [0;33mfirmware[0m to directory [0;33m/logs/firmware/firmware_unblob_extracted[0m
+
+╭──────────────────────────────────────── unblob (25.5.26) ────────────────────────────────────────╮
+│ Output path: None                                                                                │
+│ Extracted files: 1                                                                               │
+│ Extracted directories: 0                                                                         │
+│ Extracted links: 0                                                                               │
+│ Extraction directory size: 38.05 KB                                                              │
+╰──────────────────────────────────────────── Summary ─────────────────────────────────────────────╯
+Chunks distribution
+┏━━━━━━━━━━━━┳━━━━━━━━━━┳━━━━━━━━━┓
+┃ Chunk type ┃   Size   ┃  Ratio  ┃
+┡━━━━━━━━━━━━╇━━━━━━━━━━╇━━━━━━━━━┩
+│ ELF64      │ 38.05 KB │ 100.00% │
+│ UNKNOWN    │  0.00 B  │  0.00%  │
+└────────────┴──────────┴─────────┘
+Chunk identification ratio: 100.00%
+[[0;33m*[0m] Root directory auto detection for [0;33m/logs/firmware[0m (could take some time)
+
+[[0;33m*[0m] Found no real root directory - setting it to: [0;33m/logs/firmware[0m via [0;33mlast resort[0m.
+[[0;33m*[0m] Deep extraction - 2nd round
+[[0;33m*[0m] Walking through all files and try to extract what ever possible
+[[0;33m*[0m] Unique and limited file array generation for [0;33m/logs/firmware[0m
+
+[[0;33m*[0m] Root directory auto detection for [0;33m/logs/firmware[0m (could take some time)
+
+[[0;33m*[0m] Found no real root directory - setting it to: [0;33m/logs/firmware[0m via [0;33mlast resort[0m.
+[[0;33m*[0m] Deep extraction - 3rd round
+[[0;33m*[0m] Walking through all files and try to extract what ever possible
+[[0;33m*[0m] Unique and limited file array generation for [0;33m/logs/firmware[0m
+
+[[0;33m*[0m] Root directory auto detection for [0;33m/logs/firmware[0m (could take some time)
+
+[[0;33m*[0m] Found no real root directory - setting it to: [0;33m/logs/firmware[0m via [0;33mlast resort[0m.
+[[0;33m*[0m] Deep extraction - 4th round
+[[0;33m*[0m] Walking through all files and try to extract what ever possible with unblob mode
+[[0;33m*[0m] WARNING: This is the last extraction round that is executed.
+[[0;33m*[0m] Unique and limited file array generation for [0;33m/logs/firmware[0m
+
+[[0;33m*[0m] Root directory auto detection for [0;33m/logs/firmware[0m (could take some time)
+
+[[0;33m*[0m] Found no real root directory - setting it to: [0;33m/logs/firmware[0m via [0;33mlast resort[0m.

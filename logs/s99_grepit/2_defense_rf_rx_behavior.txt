@@ -1,0 +1,10 @@
+[[0;33m*[0m] Searching (args for grep: [0;33m-i[0m) for [0;33m((while|for)\s*\(\s*(1|;;)\s*\)\s*\{[^}]*(freq|rx|listen|bind|tune|start|read_samples|process_samples)[^
+]*\})|((freq|frequency)[^a-zA-Z0-9]*[0-9]{3,6}(\.[0-9]+)?\s*(Hz|kHz|MHz|GHz))|(rtl_fm|uhd_rx|rx_samples_continuous|gnuradio.*receive)[0m.
+[[0;33m*[0m] Grepit state info - comment: [0;33mrf_rx_behavior[0m
+[[0;33m*[0m] Grepit state info - Filename [0;33m2_defense_rf_rx_behavior.txt[0m
+[[0;33m*[0m] Grepit state info - Example: [0;33mRF listening logic (looped receive, tuning, or SDR binding)[0m
+[[0;33m*[0m] Grepit state info - False positive example: [0;33mbinary strings, configs[0m
+[[0;33m*[0m] Grepit state info - Grep args: [0;33m-i[0m
+[[0;33m*[0m] Grepit state info - Search regex: [0;33m((while|for)\s*\(\s*(1|;;)\s*\)\s*\{[^}]*(freq|rx|listen|bind|tune|start|read_samples|process_samples)[^
+]*\})|((freq|frequency)[^a-zA-Z0-9]*[0-9]{3,6}(\.[0-9]+)?\s*(Hz|kHz|MHz|GHz))|(rtl_fm|uhd_rx|rx_samples_continuous|gnuradio.*receive)[0m
+

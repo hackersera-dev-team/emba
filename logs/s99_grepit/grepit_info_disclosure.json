@@ -1,0 +1,356 @@
+[
+  {
+    "type": "sensitive_files",
+    "match": "/dev/null",
+    "description": "Sensitive file paths (e.g. /etc/passwd, /var/log/)",
+    "evidence": "[*] Searching (args for grep: -i) for (/etc/passwd|/var/log/|/root/|/home/[^/]+/|/tmp/|/dev/null|/proc/self/cwd|/proc/self/exe|/proc/self/fd/\\d+)."
+  },
+  {
+    "type": "sensitive_files",
+    "match": "/etc/passwd",
+    "description": "Sensitive file paths (e.g. /etc/passwd, /var/log/)",
+    "evidence": "[*] Searching (args for grep: -i) for (/etc/passwd|/var/log/|/root/|/home/[^/]+/|/tmp/|/dev/null|/proc/self/cwd|/proc/self/exe|/proc/self/fd/\\d+)."
+  },
+  {
+    "type": "sensitive_files",
+    "match": "/home/[^/",
+    "description": "Sensitive file paths (e.g. /etc/passwd, /var/log/)",
+    "evidence": "[*] Searching (args for grep: -i) for (/etc/passwd|/var/log/|/root/|/home/[^/]+/|/tmp/|/dev/null|/proc/self/cwd|/proc/self/exe|/proc/self/fd/\\d+)."
+  },
+  {
+    "type": "sensitive_files",
+    "match": "/proc/self/cwd",
+    "description": "Sensitive file paths (e.g. /etc/passwd, /var/log/)",
+    "evidence": "[*] Searching (args for grep: -i) for (/etc/passwd|/var/log/|/root/|/home/[^/]+/|/tmp/|/dev/null|/proc/self/cwd|/proc/self/exe|/proc/self/fd/\\d+)."
+  },
+  {
+    "type": "sensitive_files",
+    "match": "/proc/self/exe",
+    "description": "Sensitive file paths (e.g. /etc/passwd, /var/log/)",
+    "evidence": "[*] Searching (args for grep: -i) for (/etc/passwd|/var/log/|/root/|/home/[^/]+/|/tmp/|/dev/null|/proc/self/cwd|/proc/self/exe|/proc/self/fd/\\d+)."
+  },
+  {
+    "type": "sensitive_files",
+    "match": "/root/",
+    "description": "Sensitive file paths (e.g. /etc/passwd, /var/log/)",
+    "evidence": "[*] Searching (args for grep: -i) for (/etc/passwd|/var/log/|/root/|/home/[^/]+/|/tmp/|/dev/null|/proc/self/cwd|/proc/self/exe|/proc/self/fd/\\d+)."
+  },
+  {
+    "type": "sensitive_files",
+    "match": "/tmp/",
+    "description": "Sensitive file paths (e.g. /etc/passwd, /var/log/)",
+    "evidence": "[*] Searching (args for grep: -i) for (/etc/passwd|/var/log/|/root/|/home/[^/]+/|/tmp/|/dev/null|/proc/self/cwd|/proc/self/exe|/proc/self/fd/\\d+)."
+  },
+  {
+    "type": "sensitive_files",
+    "match": "/var/log/",
+    "description": "Sensitive file paths (e.g. /etc/passwd, /var/log/)",
+    "evidence": "[*] Searching (args for grep: -i) for (/etc/passwd|/var/log/|/root/|/home/[^/]+/|/tmp/|/dev/null|/proc/self/cwd|/proc/self/exe|/proc/self/fd/\\d+)."
+  },
+  {
+    "type": "sensitive_files",
+    "match": "/etc/passwd",
+    "description": "Sensitive file paths (e.g. /etc/passwd, /var/log/)",
+    "evidence": "[*] Grepit state info - Example: Sensitive file paths (e.g. /etc/passwd, /var/log/)"
+  },
+  {
+    "type": "sensitive_files",
+    "match": "/var/log/",
+    "description": "Sensitive file paths (e.g. /etc/passwd, /var/log/)",
+    "evidence": "[*] Grepit state info - Example: Sensitive file paths (e.g. /etc/passwd, /var/log/)"
+  },
+  {
+    "type": "sensitive_files",
+    "match": "/dev/null",
+    "description": "Sensitive file paths (e.g. /etc/passwd, /var/log/)",
+    "evidence": "[*] Grepit state info - Search regex: (/etc/passwd|/var/log/|/root/|/home/[^/]+/|/tmp/|/dev/null|/proc/self/cwd|/proc/self/exe|/proc/self/fd/\\d+)"
+  },
+  {
+    "type": "sensitive_files",
+    "match": "/etc/passwd",
+    "description": "Sensitive file paths (e.g. /etc/passwd, /var/log/)",
+    "evidence": "[*] Grepit state info - Search regex: (/etc/passwd|/var/log/|/root/|/home/[^/]+/|/tmp/|/dev/null|/proc/self/cwd|/proc/self/exe|/proc/self/fd/\\d+)"
+  },
+  {
+    "type": "sensitive_files",
+    "match": "/home/[^/",
+    "description": "Sensitive file paths (e.g. /etc/passwd, /var/log/)",
+    "evidence": "[*] Grepit state info - Search regex: (/etc/passwd|/var/log/|/root/|/home/[^/]+/|/tmp/|/dev/null|/proc/self/cwd|/proc/self/exe|/proc/self/fd/\\d+)"
+  },
+  {
+    "type": "sensitive_files",
+    "match": "/proc/self/cwd",
+    "description": "Sensitive file paths (e.g. /etc/passwd, /var/log/)",
+    "evidence": "[*] Grepit state info - Search regex: (/etc/passwd|/var/log/|/root/|/home/[^/]+/|/tmp/|/dev/null|/proc/self/cwd|/proc/self/exe|/proc/self/fd/\\d+)"
+  },
+  {
+    "type": "sensitive_files",
+    "match": "/proc/self/exe",
+    "description": "Sensitive file paths (e.g. /etc/passwd, /var/log/)",
+    "evidence": "[*] Grepit state info - Search regex: (/etc/passwd|/var/log/|/root/|/home/[^/]+/|/tmp/|/dev/null|/proc/self/cwd|/proc/self/exe|/proc/self/fd/\\d+)"
+  },
+  {
+    "type": "sensitive_files",
+    "match": "/root/",
+    "description": "Sensitive file paths (e.g. /etc/passwd, /var/log/)",
+    "evidence": "[*] Grepit state info - Search regex: (/etc/passwd|/var/log/|/root/|/home/[^/]+/|/tmp/|/dev/null|/proc/self/cwd|/proc/self/exe|/proc/self/fd/\\d+)"
+  },
+  {
+    "type": "sensitive_files",
+    "match": "/tmp/",
+    "description": "Sensitive file paths (e.g. /etc/passwd, /var/log/)",
+    "evidence": "[*] Grepit state info - Search regex: (/etc/passwd|/var/log/|/root/|/home/[^/]+/|/tmp/|/dev/null|/proc/self/cwd|/proc/self/exe|/proc/self/fd/\\d+)"
+  },
+  {
+    "type": "sensitive_files",
+    "match": "/var/log/",
+    "description": "Sensitive file paths (e.g. /etc/passwd, /var/log/)",
+    "evidence": "[*] Grepit state info - Search regex: (/etc/passwd|/var/log/|/root/|/home/[^/]+/|/tmp/|/dev/null|/proc/self/cwd|/proc/self/exe|/proc/self/fd/\\d+)"
+  },
+  {
+    "type": "gnss_telemetry",
+    "match": "BeiDou",
+    "description": "GNSS telemetry data (e.g. GPS, GLONASS)",
+    "evidence": "[*] Searching (args for grep: -i) for (?i)\b(GNSS|GPS|GLONASS|Galileo|BeiDou|QZSS)\b."
+  },
+  {
+    "type": "gnss_telemetry",
+    "match": "GLONASS",
+    "description": "GNSS telemetry data (e.g. GPS, GLONASS)",
+    "evidence": "[*] Searching (args for grep: -i) for (?i)\b(GNSS|GPS|GLONASS|Galileo|BeiDou|QZSS)\b."
+  },
+  {
+    "type": "gnss_telemetry",
+    "match": "GNSS",
+    "description": "GNSS telemetry data (e.g. GPS, GLONASS)",
+    "evidence": "[*] Searching (args for grep: -i) for (?i)\b(GNSS|GPS|GLONASS|Galileo|BeiDou|QZSS)\b."
+  },
+  {
+    "type": "gnss_telemetry",
+    "match": "GPS",
+    "description": "GNSS telemetry data (e.g. GPS, GLONASS)",
+    "evidence": "[*] Searching (args for grep: -i) for (?i)\b(GNSS|GPS|GLONASS|Galileo|BeiDou|QZSS)\b."
+  },
+  {
+    "type": "gnss_telemetry",
+    "match": "Galileo",
+    "description": "GNSS telemetry data (e.g. GPS, GLONASS)",
+    "evidence": "[*] Searching (args for grep: -i) for (?i)\b(GNSS|GPS|GLONASS|Galileo|BeiDou|QZSS)\b."
+  },
+  {
+    "type": "gnss_telemetry",
+    "match": "QZSS",
+    "description": "GNSS telemetry data (e.g. GPS, GLONASS)",
+    "evidence": "[*] Searching (args for grep: -i) for (?i)\b(GNSS|GPS|GLONASS|Galileo|BeiDou|QZSS)\b."
+  },
+  {
+    "type": "gnss_telemetry",
+    "match": "GLONASS",
+    "description": "GNSS telemetry data (e.g. GPS, GLONASS)",
+    "evidence": "[*] Grepit state info - Example: GNSS telemetry data (e.g. GPS, GLONASS)"
+  },
+  {
+    "type": "gnss_telemetry",
+    "match": "GPS",
+    "description": "GNSS telemetry data (e.g. GPS, GLONASS)",
+    "evidence": "[*] Grepit state info - Example: GNSS telemetry data (e.g. GPS, GLONASS)"
+  },
+  {
+    "type": "gnss_telemetry",
+    "match": "BeiDou",
+    "description": "GNSS telemetry data (e.g. GPS, GLONASS)",
+    "evidence": "[*] Grepit state info - Search regex: (?i)\b(GNSS|GPS|GLONASS|Galileo|BeiDou|QZSS)\b"
+  },
+  {
+    "type": "gnss_telemetry",
+    "match": "GLONASS",
+    "description": "GNSS telemetry data (e.g. GPS, GLONASS)",
+    "evidence": "[*] Grepit state info - Search regex: (?i)\b(GNSS|GPS|GLONASS|Galileo|BeiDou|QZSS)\b"
+  },
+  {
+    "type": "gnss_telemetry",
+    "match": "GNSS",
+    "description": "GNSS telemetry data (e.g. GPS, GLONASS)",
+    "evidence": "[*] Grepit state info - Search regex: (?i)\b(GNSS|GPS|GLONASS|Galileo|BeiDou|QZSS)\b"
+  },
+  {
+    "type": "gnss_telemetry",
+    "match": "GPS",
+    "description": "GNSS telemetry data (e.g. GPS, GLONASS)",
+    "evidence": "[*] Grepit state info - Search regex: (?i)\b(GNSS|GPS|GLONASS|Galileo|BeiDou|QZSS)\b"
+  },
+  {
+    "type": "gnss_telemetry",
+    "match": "Galileo",
+    "description": "GNSS telemetry data (e.g. GPS, GLONASS)",
+    "evidence": "[*] Grepit state info - Search regex: (?i)\b(GNSS|GPS|GLONASS|Galileo|BeiDou|QZSS)\b"
+  },
+  {
+    "type": "gnss_telemetry",
+    "match": "QZSS",
+    "description": "GNSS telemetry data (e.g. GPS, GLONASS)",
+    "evidence": "[*] Grepit state info - Search regex: (?i)\b(GNSS|GPS|GLONASS|Galileo|BeiDou|QZSS)\b"
+  },
+  {
+    "type": "rf_rx_behavior",
+    "match": "gnuradio.*receive",
+    "description": "RF listening logic (looped receive, tuning, or SDR binding)",
+    "evidence": "]*\\})|((freq|frequency)[^a-zA-Z0-9]*[0-9]{3,6}(\\.[0-9]+)?\\s*(Hz|kHz|MHz|GHz))|(rtl_fm|uhd_rx|rx_samples_continuous|gnuradio.*receive)."
+  },
+  {
+    "type": "rf_rx_behavior",
+    "match": "rtl_fm",
+    "description": "RF listening logic (looped receive, tuning, or SDR binding)",
+    "evidence": "]*\\})|((freq|frequency)[^a-zA-Z0-9]*[0-9]{3,6}(\\.[0-9]+)?\\s*(Hz|kHz|MHz|GHz))|(rtl_fm|uhd_rx|rx_samples_continuous|gnuradio.*receive)."
+  },
+  {
+    "type": "rf_rx_behavior",
+    "match": "rx_samples_continuous",
+    "description": "RF listening logic (looped receive, tuning, or SDR binding)",
+    "evidence": "]*\\})|((freq|frequency)[^a-zA-Z0-9]*[0-9]{3,6}(\\.[0-9]+)?\\s*(Hz|kHz|MHz|GHz))|(rtl_fm|uhd_rx|rx_samples_continuous|gnuradio.*receive)."
+  },
+  {
+    "type": "rf_rx_behavior",
+    "match": "uhd_rx",
+    "description": "RF listening logic (looped receive, tuning, or SDR binding)",
+    "evidence": "]*\\})|((freq|frequency)[^a-zA-Z0-9]*[0-9]{3,6}(\\.[0-9]+)?\\s*(Hz|kHz|MHz|GHz))|(rtl_fm|uhd_rx|rx_samples_continuous|gnuradio.*receive)."
+  },
+  {
+    "type": "rf_rx_behavior",
+    "match": "gnuradio.*receive",
+    "description": "RF listening logic (looped receive, tuning, or SDR binding)",
+    "evidence": "]*\\})|((freq|frequency)[^a-zA-Z0-9]*[0-9]{3,6}(\\.[0-9]+)?\\s*(Hz|kHz|MHz|GHz))|(rtl_fm|uhd_rx|rx_samples_continuous|gnuradio.*receive)"
+  },
+  {
+    "type": "rf_rx_behavior",
+    "match": "rtl_fm",
+    "description": "RF listening logic (looped receive, tuning, or SDR binding)",
+    "evidence": "]*\\})|((freq|frequency)[^a-zA-Z0-9]*[0-9]{3,6}(\\.[0-9]+)?\\s*(Hz|kHz|MHz|GHz))|(rtl_fm|uhd_rx|rx_samples_continuous|gnuradio.*receive)"
+  },
+  {
+    "type": "rf_rx_behavior",
+    "match": "rx_samples_continuous",
+    "description": "RF listening logic (looped receive, tuning, or SDR binding)",
+    "evidence": "]*\\})|((freq|frequency)[^a-zA-Z0-9]*[0-9]{3,6}(\\.[0-9]+)?\\s*(Hz|kHz|MHz|GHz))|(rtl_fm|uhd_rx|rx_samples_continuous|gnuradio.*receive)"
+  },
+  {
+    "type": "rf_rx_behavior",
+    "match": "uhd_rx",
+    "description": "RF listening logic (looped receive, tuning, or SDR binding)",
+    "evidence": "]*\\})|((freq|frequency)[^a-zA-Z0-9]*[0-9]{3,6}(\\.[0-9]+)?\\s*(Hz|kHz|MHz|GHz))|(rtl_fm|uhd_rx|rx_samples_continuous|gnuradio.*receive)"
+  },
+  {
+    "type": "gps_country_trigger",
+    "match": "afghanistan",
+    "description": "Suspicious GPS/country-specific control logic",
+    "evidence": "[*] Searching (args for grep: -i) for (?i)(iran|china|india|pakistan|north[_\\- ]?korea|russia|afghanistan|kashmir|israel|us[a]?)."
+  },
+  {
+    "type": "gps_country_trigger",
+    "match": "china",
+    "description": "Suspicious GPS/country-specific control logic",
+    "evidence": "[*] Searching (args for grep: -i) for (?i)(iran|china|india|pakistan|north[_\\- ]?korea|russia|afghanistan|kashmir|israel|us[a]?)."
+  },
+  {
+    "type": "gps_country_trigger",
+    "match": "india",
+    "description": "Suspicious GPS/country-specific control logic",
+    "evidence": "[*] Searching (args for grep: -i) for (?i)(iran|china|india|pakistan|north[_\\- ]?korea|russia|afghanistan|kashmir|israel|us[a]?)."
+  },
+  {
+    "type": "gps_country_trigger",
+    "match": "iran",
+    "description": "Suspicious GPS/country-specific control logic",
+    "evidence": "[*] Searching (args for grep: -i) for (?i)(iran|china|india|pakistan|north[_\\- ]?korea|russia|afghanistan|kashmir|israel|us[a]?)."
+  },
+  {
+    "type": "gps_country_trigger",
+    "match": "israel",
+    "description": "Suspicious GPS/country-specific control logic",
+    "evidence": "[*] Searching (args for grep: -i) for (?i)(iran|china|india|pakistan|north[_\\- ]?korea|russia|afghanistan|kashmir|israel|us[a]?)."
+  },
+  {
+    "type": "gps_country_trigger",
+    "match": "kashmir",
+    "description": "Suspicious GPS/country-specific control logic",
+    "evidence": "[*] Searching (args for grep: -i) for (?i)(iran|china|india|pakistan|north[_\\- ]?korea|russia|afghanistan|kashmir|israel|us[a]?)."
+  },
+  {
+    "type": "gps_country_trigger",
+    "match": "pakistan",
+    "description": "Suspicious GPS/country-specific control logic",
+    "evidence": "[*] Searching (args for grep: -i) for (?i)(iran|china|india|pakistan|north[_\\- ]?korea|russia|afghanistan|kashmir|israel|us[a]?)."
+  },
+  {
+    "type": "gps_country_trigger",
+    "match": "russia",
+    "description": "Suspicious GPS/country-specific control logic",
+    "evidence": "[*] Searching (args for grep: -i) for (?i)(iran|china|india|pakistan|north[_\\- ]?korea|russia|afghanistan|kashmir|israel|us[a]?)."
+  },
+  {
+    "type": "gps_country_trigger",
+    "match": "us",
+    "description": "Suspicious GPS/country-specific control logic",
+    "evidence": "[*] Searching (args for grep: -i) for (?i)(iran|china|india|pakistan|north[_\\- ]?korea|russia|afghanistan|kashmir|israel|us[a]?)."
+  },
+  {
+    "type": "gps_country_trigger",
+    "match": "us",
+    "description": "Suspicious GPS/country-specific control logic",
+    "evidence": "[*] Grepit state info - Example: Suspicious GPS/country-specific control logic"
+  },
+  {
+    "type": "gps_country_trigger",
+    "match": "afghanistan",
+    "description": "Suspicious GPS/country-specific control logic",
+    "evidence": "[*] Grepit state info - Search regex: (?i)(iran|china|india|pakistan|north[_\\- ]?korea|russia|afghanistan|kashmir|israel|us[a]?)"
+  },
+  {
+    "type": "gps_country_trigger",
+    "match": "china",
+    "description": "Suspicious GPS/country-specific control logic",
+    "evidence": "[*] Grepit state info - Search regex: (?i)(iran|china|india|pakistan|north[_\\- ]?korea|russia|afghanistan|kashmir|israel|us[a]?)"
+  },
+  {
+    "type": "gps_country_trigger",
+    "match": "india",
+    "description": "Suspicious GPS/country-specific control logic",
+    "evidence": "[*] Grepit state info - Search regex: (?i)(iran|china|india|pakistan|north[_\\- ]?korea|russia|afghanistan|kashmir|israel|us[a]?)"
+  },
+  {
+    "type": "gps_country_trigger",
+    "match": "iran",
+    "description": "Suspicious GPS/country-specific control logic",
+    "evidence": "[*] Grepit state info - Search regex: (?i)(iran|china|india|pakistan|north[_\\- ]?korea|russia|afghanistan|kashmir|israel|us[a]?)"
+  },
+  {
+    "type": "gps_country_trigger",
+    "match": "israel",
+    "description": "Suspicious GPS/country-specific control logic",
+    "evidence": "[*] Grepit state info - Search regex: (?i)(iran|china|india|pakistan|north[_\\- ]?korea|russia|afghanistan|kashmir|israel|us[a]?)"
+  },
+  {
+    "type": "gps_country_trigger",
+    "match": "kashmir",
+    "description": "Suspicious GPS/country-specific control logic",
+    "evidence": "[*] Grepit state info - Search regex: (?i)(iran|china|india|pakistan|north[_\\- ]?korea|russia|afghanistan|kashmir|israel|us[a]?)"
+  },
+  {
+    "type": "gps_country_trigger",
+    "match": "pakistan",
+    "description": "Suspicious GPS/country-specific control logic",
+    "evidence": "[*] Grepit state info - Search regex: (?i)(iran|china|india|pakistan|north[_\\- ]?korea|russia|afghanistan|kashmir|israel|us[a]?)"
+  },
+  {
+    "type": "gps_country_trigger",
+    "match": "russia",
+    "description": "Suspicious GPS/country-specific control logic",
+    "evidence": "[*] Grepit state info - Search regex: (?i)(iran|china|india|pakistan|north[_\\- ]?korea|russia|afghanistan|kashmir|israel|us[a]?)"
+  },
+  {
+    "type": "gps_country_trigger",
+    "match": "us",
+    "description": "Suspicious GPS/country-specific control logic",
+    "evidence": "[*] Grepit state info - Search regex: (?i)(iran|china|india|pakistan|north[_\\- ]?korea|russia|afghanistan|kashmir|israel|us[a]?)"
+  }
+]

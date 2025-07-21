@@ -1,0 +1,7 @@
+[[0;34m+[0m] [0;36m[1mFinal vulnerability aggregator[0m
+[1m=================================================================[0m
+This module aggregates all found version numbers together from S06, S08, S09, S24, S25 and S115 and searches with cve-bin-tool for known vulnerabilities.
+Additionally, the identified CVE details are matched with EPSS, public exploit databases and a VEX json is generated.
+
+
+[[0;31m-[0m] Mon Jul 21 08:47:01 IST 2025 - F17_cve_bin_tool nothing reported

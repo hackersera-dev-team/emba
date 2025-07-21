@@ -1,0 +1,6 @@
+
+
+[0;34m==>[0m [0;36mPerl cpan package management SBOM analysis[0m
+-----------------------------------------------------------------
+[[0;31m-[0m] No perl CPAN files found!
+[[0;33m*[0m] perl_cpan_mgmt sub-module finished

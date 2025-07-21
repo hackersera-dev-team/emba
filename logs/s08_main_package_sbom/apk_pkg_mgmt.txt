@@ -1,0 +1,6 @@
+
+
+[0;34m==>[0m [0;36mAPK package management identification[0m
+-----------------------------------------------------------------
+[[0;31m-[0m] No APK package files found!
+[[0;33m*[0m] apk_pkg_mgmt sub-module finished

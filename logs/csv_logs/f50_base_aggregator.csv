@@ -1,0 +1,7 @@
+FW_path;/firmware;NA;NA;NA;NA;NA;NA;NA;
+emba_command;./emba -l /logs -f /firmware -i -c -W -m S08 -P 4 -T 4;NA;NA;NA;NA;NA;NA;NA;
+EMBA_version;1.5.2-8710145db306d1cde17c2a9009b7f096f8d57d65;NA;NA;NA;NA;NA;NA;NA;
+architecture_verified;x64;EL;NA;NA;NA;NA;NA;NA;
+files;1;NA;NA;NA;NA;NA;NA;NA;
+directories;4;NA;NA;NA;NA;NA;NA;NA;
+entropy_value;4.648277 bits per byte.;NA;NA;NA;NA;NA;NA;NA;

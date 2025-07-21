@@ -1,0 +1,13 @@
+[[0;33m*[0m] Searching (args for grep: [0;33m-i[0m) for [0;33m(?i)(GNSS|GPS|GLONASS|Galileo|BeiDou|QZSS)[0m.
+[[0;33m*[0m] Grepit state info - comment: [0;33mgnss_telemetry[0m
+[[0;33m*[0m] Grepit state info - Filename [0;33m2_general_gnss_telemetry.txt[0m
+[[0;33m*[0m] Grepit state info - Example: [0;33mGNSS telemetry data (e.g. GPS, GLONASS)[0m
+[[0;33m*[0m] Grepit state info - False positive example: [0;33mbinary strings, configs[0m
+[[0;33m*[0m] Grepit state info - Grep args: [0;33m-i[0m
+[[0;33m*[0m] Grepit state info - Search regex: [0;33m(?i)(GNSS|GPS|GLONASS|Galileo|BeiDou|QZSS)[0m
+
+[32m28[m[36m-[m@w.?_55v~	
+[32m29[m[36m-[mf%X''	N=XbO
+[32m30[m[36m-[m
+[32m31[m[36m:[m>M?5L..	XNdrFzrX$:Xwa>F
+[32m32[m[36m-[m/

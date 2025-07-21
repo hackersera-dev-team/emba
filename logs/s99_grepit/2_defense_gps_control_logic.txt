@@ -1,0 +1,10 @@
+[[0;33m*[0m] Searching (args for grep: [0;33m-i[0m) for [0;33m(?i)(if\s*\(\s*gps\s*==\s*true\s*\)\s*\{[^}]*(gps|geofence|region|zone)[^
+]*\})|((gps|geofence|region|zone)\s*=\s*true\s*;)[0m.
+[[0;33m*[0m] Grepit state info - comment: [0;33mgps_control_logic[0m
+[[0;33m*[0m] Grepit state info - Filename [0;33m2_defense_gps_control_logic.txt[0m
+[[0;33m*[0m] Grepit state info - Example: [0;33mGPS control logic (e.g. if gps == true)[0m
+[[0;33m*[0m] Grepit state info - False positive example: [0;33mbinary strings, configs[0m
+[[0;33m*[0m] Grepit state info - Grep args: [0;33m-i[0m
+[[0;33m*[0m] Grepit state info - Search regex: [0;33m(?i)(if\s*\(\s*gps\s*==\s*true\s*\)\s*\{[^}]*(gps|geofence|region|zone)[^
+]*\})|((gps|geofence|region|zone)\s*=\s*true\s*;)[0m
+

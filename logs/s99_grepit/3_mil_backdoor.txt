@@ -1,0 +1,14 @@
+[[0;33m*[0m] Searching (args for grep: [0;33m-i[0m) for [0;33mfieldop|milops#2025|/etc/init.d/.remote_init|remote shell|nc[\s-]+l[\s-]+p[\s0-9]+[\s-]+e[\s-]+/bin/sh|reboot -f|back.{0,20}door|Actuating flaps|EMERGENCY OVERRIDE[0m.
+[[0;33m*[0m] Grepit state info - comment: [0;33mDrone/MIL backdoor trigger keywords[0m
+[[0;33m*[0m] Grepit state info - Filename [0;33m3_mil_backdoor.txt[0m
+[[0;33m*[0m] Grepit state info - Example: [0;33m[Backdoor Triggered] UID:[0m
+[[0;33m*[0m] Grepit state info - False positive example: [0;33mdebug log with UID shown[0m
+[[0;33m*[0m] Grepit state info - Grep args: [0;33m-i[0m
+[[0;33m*[0m] Grepit state info - Search regex: [0;33mfieldop|milops#2025|/etc/init.d/.remote_init|remote shell|nc[\s-]+l[\s-]+p[\s0-9]+[\s-]+e[\s-]+/bin/sh|reboot -f|back.{0,20}door|Actuating flaps|EMERGENCY OVERRIDE[0m
+
+[32m80[m[36m-[m340
+[32m81[m[36m-[mK(K	Jg	gwYN.~)0		+u(>u0>t'%0
+[32m82[m[36m-[m
+[32m83[m[36m:[mN	G'S.~<)@	ztY&X"6KX/"'XT7YMX0""Yu:pJY,0!>	XKXK#>3M<.~	!t(0> >		K?gW.2U~<4	h"=. <. <. <. <	uw@.~)#	s#u?0=u?>=uI.~$$
+[32m84[m[36m-[m+P1P7CPZPd P@sPPQY0:8M3 8O6"H^{ C P#/o$ $	X"2P9L+!g|$mR#/(/z'
+[32m85[m[36m:[m"+I

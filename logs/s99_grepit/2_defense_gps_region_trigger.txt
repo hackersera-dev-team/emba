@@ -1,0 +1,10 @@
+[[0;33m*[0m] Searching (args for grep: [0;33m-i[0m) for [0;33m(?i)(if\s*\(\s*lat\s*>\s*[0-9]{1,3}\.[0-9]+\s*\)|if\s*\(\s*lon\s*<\s*[0-9]{1,3}\.[0-9]+\s*\)|if\s*\(\s*lat\s*==\s*[0-9]{1,3}\.[0-9]+\s*\)\s*\{[^}]*(gps|geofence|region|zone)[^
+]*\})[0m.
+[[0;33m*[0m] Grepit state info - comment: [0;33mgps_region_trigger[0m
+[[0;33m*[0m] Grepit state info - Filename [0;33m2_defense_gps_region_trigger.txt[0m
+[[0;33m*[0m] Grepit state info - Example: [0;33mGPS region trigger logic (e.g. if lat > 40.0)[0m
+[[0;33m*[0m] Grepit state info - False positive example: [0;33mbinary strings, configs[0m
+[[0;33m*[0m] Grepit state info - Grep args: [0;33m-i[0m
+[[0;33m*[0m] Grepit state info - Search regex: [0;33m(?i)(if\s*\(\s*lat\s*>\s*[0-9]{1,3}\.[0-9]+\s*\)|if\s*\(\s*lon\s*<\s*[0-9]{1,3}\.[0-9]+\s*\)|if\s*\(\s*lat\s*==\s*[0-9]{1,3}\.[0-9]+\s*\)\s*\{[^}]*(gps|geofence|region|zone)[^
+]*\})[0m
+

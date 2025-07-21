@@ -1,0 +1,43 @@
+[[0;35m![0m][0;35m Mon Jul 21 08:44:29 IST 2025 - Pre-checking phase started on Mon Jul 21 08:44:29 IST 2025
+    [0mFirmware binary path: /firmware[0m
+[[0;33m*[0m] Mon Jul 21 08:44:29 IST 2025 - P02_firmware_bin_file_check starting
+[[0;33m*[0m] Mon Jul 21 08:44:33 IST 2025 - P02_firmware_bin_file_check finished
+[[0;33m*[0m] Mon Jul 21 08:44:34 IST 2025 - P50_binwalk_extractor starting
+[[0;33m*[0m] Mon Jul 21 08:44:36 IST 2025 - P50_binwalk_extractor finished
+[[0;33m*[0m] Mon Jul 21 08:44:36 IST 2025 - P55_unblob_extractor starting
+[[0;33m*[0m] Mon Jul 21 08:44:38 IST 2025 - P55_unblob_extractor finished
+[[0;33m*[0m] Mon Jul 21 08:44:39 IST 2025 - P60_deep_extractor starting
+[[0;33m*[0m] Mon Jul 21 08:44:47 IST 2025 - P60_deep_extractor finished
+[[0;33m*[0m] Mon Jul 21 08:44:48 IST 2025 - P65_package_extractor starting
+[[0;33m*[0m] Mon Jul 21 08:44:48 IST 2025 - P65_package_extractor finished
+[[0;33m*[0m] Mon Jul 21 08:44:48 IST 2025 - P99_prepare_analyzer starting
+[[0;33m*[0m] Mon Jul 21 08:44:51 IST 2025 - P99_prepare_analyzer finished
+[[0;35m![0m][0;35m Mon Jul 21 08:44:51 IST 2025 - Pre-checking phase ended on Mon Jul 21 08:44:51 IST 2025 and took about 0 days and 00:00:26 
+[0m
+[[0;35m![0m][0;35m Mon Jul 21 08:44:51 IST 2025 - Testing phase started on Mon Jul 21 08:44:51 IST 2025
+    [0mFirmware path: /firmware[0m
+[[0;33m*[0m] Mon Jul 21 08:44:51 IST 2025 - S08_main_package_sbom starting
+[[0;33m*[0m] Mon Jul 21 08:45:02 IST 2025 - S99_grepit starting
+[[0;33m*[0m] Mon Jul 21 08:45:02 IST 2025 - S99_grepit starting
+[[0;33m*[0m] Mon Jul 21 08:46:23 IST 2025 - S99_grepit finished
+[[0;33m*[0m] Mon Jul 21 08:46:43 IST 2025 - grepit_module_information_disclosure finished
+[[0;33m*[0m] Mon Jul 21 08:46:54 IST 2025 - S99_grepit finished
+[[0;33m*[0m] Mon Jul 21 08:46:56 IST 2025 - S08_main_package_sbom finished
+[[0;35m![0m][0;35m Mon Jul 21 08:46:56 IST 2025 - Testing phase ended on Mon Jul 21 08:46:56 IST 2025 and took about 0 days and 00:02:31 
+[0m
+[[0;35m![0m][0;35m Mon Jul 21 08:46:56 IST 2025 - Reporting phase started on Mon Jul 21 08:46:56 IST 2025
+[0m
+[[0;33m*[0m] Mon Jul 21 08:46:57 IST 2025 - F02_toolchain starting
+[[0;33m*[0m] Mon Jul 21 08:46:58 IST 2025 - F02_toolchain finished
+[[0;33m*[0m] Mon Jul 21 08:46:58 IST 2025 - F05_qs_resolver starting
+[[0;33m*[0m] Mon Jul 21 08:46:59 IST 2025 - F05_qs_resolver finished
+[[0;33m*[0m] Mon Jul 21 08:46:59 IST 2025 - F10_license_summary starting
+[[0;33m*[0m] Mon Jul 21 08:46:59 IST 2025 - F10_license_summary finished
+[[0;33m*[0m] Mon Jul 21 08:47:00 IST 2025 - F15_cyclonedx_sbom starting
+[[0;33m*[0m] Mon Jul 21 08:47:00 IST 2025 - F15_cyclonedx_sbom finished
+[[0;33m*[0m] Mon Jul 21 08:47:00 IST 2025 - F17_cve_bin_tool starting
+[[0;33m*[0m] Mon Jul 21 08:47:01 IST 2025 - F17_cve_bin_tool finished
+[[0;33m*[0m] Mon Jul 21 08:47:01 IST 2025 - F50_base_aggregator starting
+[[0;33m*[0m] Mon Jul 21 08:47:04 IST 2025 - F50_base_aggregator finished
+[[0;35m![0m][0;35m Mon Jul 21 08:47:04 IST 2025 - Test ended on Mon Jul 21 08:47:04 IST 2025 and took about 0 days and 00:02:39 
+[0m

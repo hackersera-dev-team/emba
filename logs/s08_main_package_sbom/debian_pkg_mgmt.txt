@@ -1,0 +1,12 @@
+
+
+[0;34m==>[0m [0;36mDebian package management identification[0m
+-----------------------------------------------------------------
+
+
+[0;34m==>[0m [0;36mDebian deb package parser[0m
+-----------------------------------------------------------------
+[[0;31m-[0m] No debian package files found!
+[[0;31m-[0m] No Debian deb archives found!
+[[0;33m*[0m] debian_pkg_mgmt sub-module finished
+[[0;33m*[0m] debian_pkg_mgmt sub-module finished

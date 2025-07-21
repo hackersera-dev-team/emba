@@ -1,0 +1,32 @@
+[[0;34m+[0m] [0;36m[1mUnblob binary firmware extractor[0m
+[1m=================================================================[0m
+The unblob extraction module is the main extraction module and is responsible for analyzing binary firmware blobs using the unblob extractor, extracting firmware to a directory and performing basic Linux path identification within the extracted firmware.
+
+
+
+
+[0;34m==>[0m [0;36mAnalyze binary firmware firmware with unblob[0m
+-----------------------------------------------------------------
+[[0;33m*[0m] Extracting binary blob [0;33mfirmware[0m to directory [0;33m/logs/firmware/unblob_extracted[0m
+
+╭──────────────────────────────────────── unblob (25.5.26) ────────────────────────────────────────╮
+│ Output path: None                                                                                │
+│ Extracted files: 1                                                                               │
+│ Extracted directories: 0                                                                         │
+│ Extracted links: 0                                                                               │
+│ Extraction directory size: 38.05 KB                                                              │
+╰──────────────────────────────────────────── Summary ─────────────────────────────────────────────╯
+Chunks distribution
+┏━━━━━━━━━━━━┳━━━━━━━━━━┳━━━━━━━━━┓
+┃ Chunk type ┃   Size   ┃  Ratio  ┃
+┡━━━━━━━━━━━━╇━━━━━━━━━━╇━━━━━━━━━┩
+│ ELF64      │ 38.05 KB │ 100.00% │
+│ UNKNOWN    │  0.00 B  │  0.00%  │
+└────────────┴──────────┴─────────┘
+Chunk identification ratio: 100.00%
+
+
+[[0;33m*[0m] Root directory auto detection for [0;33m/logs/firmware/unblob_extracted[0m (could take some time)
+
+[[0;31m-[0m] No /logs/csv_logs/p99_prepare_analyzer.csv log file created ... no root directory detection possible
+[[0;31m-[0m] Mon Jul 21 08:44:38 IST 2025 - P55_unblob_extractor nothing reported

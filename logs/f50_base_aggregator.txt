@@ -1,0 +1,18 @@
+[[0;34m+[0m] [0;36m[1mFinal aggregator[0m
+[1m=================================================================[0m
+The main aggregator module compiles and summarizes results from various analysis modules into a comprehensive overview by processing and logging detailed information from each identified element.
+
+
+[[0;32m+[0m][0;32m Tested firmware:[0;33m /firmware[0m[0m
+[[0;32m+[0m][0;32m EMBA start command:[0;33m ./emba -l /logs -f /firmware -i -c -W -m S08 -P 4 -T 4[0m[0m
+[[0;32m+[0m][0;32m EMBA version: [0;33m1.5.2-8710145db306d1cde17c2a9009b7f096f8d57d65[0m[0m
+[[0;32m+[0m][0;32m Detected architecture and endianness ([0;33mverified[0;32m):[0;33m x64 / EL[0m[0m
+
+-----------------------------------------------------------------
+
+[[0;32m+[0m][0;32m [0;33m1[0;32m files and [0;33m4 [0;32mdirectories detected.[0m
+[[0;32m+[0m][0;32m Entropy analysis of binary firmware is: [0;33m4.648277 bits per byte.[0m
+[[0;32m+[0m][0;32m Entropy analysis of binary firmware is available:[0;33m /logs/firmware_entropy.png[0m
+
+-----------------------------------------------------------------
+

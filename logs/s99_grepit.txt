@@ -1,0 +1,45 @@
+[[0;34m+[0m] [0;36m[1mIntelligent grepit module[0m
+[1m=================================================================[0m
+This module tries to identify interesting areas within the firmware with the tool grepit from the CRASS (code review audit script scanner) toolbox.
+The grepit module name starts with a priority value between 1-9, where 1 is more interesting (low false positive rate, certainty of vulnerability) and 9 is only something you might want to have a look when you are desperately looking for vulnerabilities
+
+
+[[0;34m+[0m] [0;36m[1mIntelligent grepit module[0m
+[1m=================================================================[0m
+This module tries to identify interesting areas within the firmware with the tool grepit from the CRASS (code review audit script scanner) toolbox.
+The grepit module name starts with a priority value between 1-9, where 1 is more interesting (low false positive rate, certainty of vulnerability) and 9 is only something you might want to have a look when you are desperately looking for vulnerabilities
+
+
+[[0;33m*[0m] Loaded [0;33m1[0m grepit modules
+
+[[0;33m*[0m] Loaded [0;33m1[0m grepit modules
+
+[[0;33m*[0m] Starting Grepit Defense module
+[[0;33m*[0m] Starting Grepit Information Disclosure module
+[[0;33m*[0m] [0;33m5[0m results of grepit module [0;33m2_general_gnss_telemetry[0m ([0;33mgnss_telemetry[0m).
+[[0;33m*[0m] [0;33m5[0m results of grepit module [0;33m2_general_gps_coordinates[0m ([0;33mgps_coordinates[0m).
+[[0;33m*[0m] [0;33m11[0m results of grepit module [0;33m2_general_sensitive_files[0m ([0;33msensitive_files[0m).
+[[0;33m*[0m] [0;33m6[0m results of grepit module [0;33m3_mil_backdoor[0m ([0;33mDrone/MIL backdoor trigger keywords[0m).
+[[0;33m*[0m] [0;33m10[0m results of grepit module [0;33m3_mil_glibc_version[0m ([0;33mglibc version pattern[0m).
+[[0;33m*[0m] [0;33m10[0m results of grepit module [0;33m3_mil_libc_version[0m ([0;33mlibc version pattern[0m).
+
+
+[[0;33m*[0m] Found [0;33m98[0m results via grepit.
+[[0;33m*[0m] No Grepit SBOM results available
+[[0;32m+[0m][0;32m Grepit information disclosure JSON saved: /logs/s99_grepit/grepit_info_disclosure.json[0m
+[[0;31m-[0m] Mon Jul 21 08:46:42 IST 2025 - grepit_module_information_disclosure nothing reported
+[[0;33m*[0m] [0;33m4[0m results of grepit module [0;33m2_defense_continuous_transmit[0m ([0;33m[0m).
+[[0;33m*[0m] [0;33m2[0m results of grepit module [0;33m2_defense_gps_control_logic[0m ([0;33m)[0m).
+[[0;33m*[0m] [0;33m12[0m results of grepit module [0;33m2_defense_gps_country_logic[0m ([0;33mgps_country_trigger[0m).
+[[0;33m*[0m] [0;33m2[0m results of grepit module [0;33m2_defense_gps_region_trigger[0m ([0;33mgps_region_trigger[0m).
+[[0;33m*[0m] [0;33m2[0m results of grepit module [0;33m2_defense_rf_rx_behavior[0m ([0;33m[0m).
+[[0;33m*[0m] [0;33m5[0m results of grepit module [0;33m2_general_gnss_telemetry[0m ([0;33mgnss_telemetry[0m).
+[[0;33m*[0m] [0;33m5[0m results of grepit module [0;33m2_general_gps_coordinates[0m ([0;33mgps_coordinates[0m).
+[[0;33m*[0m] [0;33m11[0m results of grepit module [0;33m2_general_sensitive_files[0m ([0;33msensitive_files[0m).
+[[0;33m*[0m] [0;33m6[0m results of grepit module [0;33m3_mil_backdoor[0m ([0;33mDrone/MIL backdoor trigger keywords[0m).
+[[0;33m*[0m] [0;33m10[0m results of grepit module [0;33m3_mil_glibc_version[0m ([0;33mglibc version pattern[0m).
+[[0;33m*[0m] [0;33m10[0m results of grepit module [0;33m3_mil_libc_version[0m ([0;33mlibc version pattern[0m).
+
+
+[[0;33m*[0m] Found [0;33m146[0m results via grepit.
+[[0;33m*[0m] No disclosure results available for parsing.

@@ -1,0 +1,9 @@
+2025-07-21 03:14.42 [debug    ] Logging configured             extract_root=. pid=2012 vebosity_level=0
+2025-07-21 03:14.42 [info     ] Start processing file          file=/logs/firmware/firmware pid=2012
+2025-07-21 03:14.42 [info     ] Activated FS access restrictions; rules=[Read("/"), ReadWrite("/dev/shm"), ReadWrite("/logs/firmware/firmware_unblob_extracted"), MakeDir("/logs/firmware"), ReadWrite("/logs/p60_deep_extractor/unblob_firmware.log")], status=FullyEnforced pid=2012
+2025-07-21 03:14.42 [debug    ] Detected file-magic            magic='ELF 64-bit LSB pie executable, x86-64, version 1\\012-  (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, BuildID[sha1]=af877ee1644025f02b43fafcc118e72b0bb20481, for GNU/Linux 3.2.0, with debug_info, not stripped\\012- data' path=/logs/firmware/firmware pid=2074
+2025-07-21 03:14.42 [debug    ] Processing file                path=/logs/firmware/firmware pid=2074 size=0x9838
+2025-07-21 03:14.42 [debug    ] Calculating chunk for pattern match handler=elf64 pid=2074 real_offset=0x0 start_offset=0x0
+2025-07-21 03:14.42 [debug    ] Found valid chunk              chunk=0x0-0x9838 handler=elf64 pid=2074
+2025-07-21 03:14.42 [debug    ] Ended searching for chunks     all_chunks=[0x0-0x9838] pid=2074
+2025-07-21 03:14.42 [debug    ] Removed inner chunks           outer_chunk_count=1 pid=2074 removed_inner_chunk_count=0

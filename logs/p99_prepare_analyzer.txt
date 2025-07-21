@@ -1,0 +1,25 @@
+[[0;34m+[0m] [0;36m[1mAnalysis preparation[0m
+[1m=================================================================[0m
+The analyzer preparation module performs essential checks and preparations to ensure successful firmware analysis.
+
+
+[[0;33m*[0m] Quick check for Linux operating-system
+[[0;31m-[0m] Your firmware does not look like a regular Linux system.
+[[0;33m*[0m] Auto detection of all files with further details for [0;33m/firmware[0m
+
+[[0;33m*[0m] Architecture auto detection and backend data population for [0;33m2[0m files (could take some time)
+
+    [0;33mArchitecture Count[0m
+    [0;33mx64           1[0m
+
+
+    [0;33mEndianness  Count[0m
+    [0;33mLittle endian          1[0m
+
+
+    Detected architecture and endianness of the firmware: [0;33mx64 / EL[0m
+
+
+
+[[0;33m*[0m] Possible RTOS system detected
+[*] Statistics:x64:EL

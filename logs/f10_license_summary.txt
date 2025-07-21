@@ -1,0 +1,7 @@
+[[0;34m+[0m] [0;36m[1mLicense inventory[0m
+[1m=================================================================[0m
+This module collects license details.
+
+
+[[0;31m-[0m] No SBOM details available
+[[0;31m-[0m] Mon Jul 21 08:46:59 IST 2025 - F10_license_summary nothing reported

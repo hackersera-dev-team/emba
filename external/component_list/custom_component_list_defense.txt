@@ -1,0 +1,215 @@
+# Operating Systems & RTOS
+vxworks | Wind River | Proprietary
+IntegrityRTOS | Green Hills Software | Proprietary
+RTEMS | OAR Corp | GPL-2.0
+uclinux | uClinux Project | GPL-2.0
+linux | Linux Foundation | GPL-2.0
+FreeRTOS | Amazon | MIT
+QNX | BlackBerry | Proprietary
+NucleusRTOS | Mentor Graphics | Proprietary
+DroneOS | MILSEC | Proprietary
+ThreadX | Express Logic | Proprietary
+baremetal | Custom | Unknown
+ZephyrRTOS | Linux Foundation | Apache-2.0
+μC/OS-II | Micrium | Proprietary
+μC/OS-III | Micrium | Proprietary
+RedHawkRT | Concurrent Real-Time | Proprietary
+LynxOS | Lynx Software Technologies | Proprietary
+Sysgo PikeOS | SYSGO | Proprietary
+eCos | eCosCentric | GPL-2.0
+
+# GPS / GNSS / Time Sync
+gpsd | GPSD Project | BSD-2-Clause
+ntpd | Network Time Foundation | BSD
+chronyd | Chrony Project | GPL-2.0
+ublox | u-blox | Proprietary
+trimble | Trimble Inc. | Proprietary
+septentrio | Septentrio NV | Proprietary
+spectracom | Orolia | Proprietary
+novatel | Hexagon | Proprietary
+meitrack | Meitrack | Proprietary
+skytraq | SkyTraq | Proprietary
+topcon | Topcon | Proprietary
+synchro | Unknown | Unknown
+orolia | Orolia | Proprietary
+datum | Datum Systems | Proprietary
+glonass | Russian GNSS | Public Domain
+galileo | EU GNSS | Public Domain
+beidou | Chinese GNSS | Public Domain
+irnss | ISRO | Public Domain
+
+# Satellite / Ground Station / Space Ops
+cubesatkit | Pumpkin Inc. | Commercial
+openkosmos | Open-Kosmos.org | Apache-2.0
+orekit | CS Group | Apache-2.0
+openmct | NASA JPL | Apache-2.0
+cosmos | Ball Aerospace | MIT
+cosmos-groundstation | Libre Space | GPL-3.0
+spacetrack | USSF | Public Domain
+libsgp4 | Vallado | Public Domain
+gpredict | OZ9AEC | GPL-2.0
+satnogs | Libre Space Foundation | GPL-3.0
+gss | Spirent | Commercial
+scos2000 | ESA | Proprietary
+redhawk | US DoD | GPL-2.0
+astrodev | Astrodev | Commercial
+tyvak | Tyvak Nano-Satellite | Proprietary
+norsat | Norsat | Proprietary
+
+# SDR / Radio / Tactical Comms
+gnuradio | GNU Radio | GPL-3.0
+uhd | Ettus Research | GPL-3.0
+bladeRF | Nuand | GPL-3.0
+hackrf | Great Scott Gadgets | GPL-2.0
+usrp | Ettus Research | GPL-3.0
+lime | Lime Microsystems | GPL-3.0
+ettus | Ettus Research | GPL-3.0
+ettus-research | Ettus Research | GPL-3.0
+openairinterface | OpenAirInterface.org | OAI Public License
+iris | Trinity College Dublin | MIT
+sdrangel | SDRangel Dev | GPL-3.0
+openjtag | OpenJTAG | GPL-2.0
+spectran | Aaronia AG | Commercial
+sigmf | Signal Metadata Format | MIT
+gqrx | Alexandru Csete | GPL-3.0
+rtl-sdr | Osmocom | GPL-2.0
+SDRPlay | SDRplay Ltd | Proprietary
+chirp | Dan Smith | GPL-3.0
+openems | OpenEMS | GPL-3.0
+skywave | SDR Software | GPL-2.0
+radiopy | MITRE | MIT
+satcomstreamer | Custom | Unknown
+
+# CAN & Industrial Protocols
+canstack | CAN in Automation | Custom
+canopen | CAN in Automation | Custom
+milstd1553 | MIL-STD | Public Domain
+arinc429 | ARINC | Commercial
+arinc653 | ARINC | Commercial
+modbus | Schneider Electric | Open Modbus/TCP
+profibus | PROFIBUS International | Proprietary
+ethercat | Beckhoff | Open
+dnp3 | IEEE | Public
+scada | Various | Mixed
+rosserial | ROS | BSD
+j1939 | SAE | Public Domain
+nmea0183 | NMEA | Commercial
+nmea2000 | NMEA | Commercial
+openscada | OpenSCADA.org | GPL-3.0
+
+# Embedded / Build Chain / System Tools
+busybox | BusyBox Project | GPL-2.0
+uclibc | uClibc Project | LGPL-2.1
+glibc | GNU | LGPL-2.1
+musl | musl-libc | MIT
+libc | GNU | LGPL-2.1
+newlib | Red Hat | BSD
+libm | GNU | LGPL-2.1
+libpthread | GNU | LGPL-2.1
+init | SysV | GPL-2.0
+systemd | freedesktop.org | LGPL-2.1
+inetutils | GNU | GPL-3.0
+telnetd | BSD | BSD
+dropbear | Matt Johnston | MIT
+mtd-utils | Linux MTD Project | GPL-2.0
+dnsmasq | Simon Kelley | GPL-2.0
+iptables | Netfilter Project | GPL-2.0
+iproute2 | Linux Foundation | GPL-2.0
+ifconfig | net-tools | GPL-2.0
+kmod | Linux Foundation | GPL-2.0
+sysvinit | SysV | GPL-2.0
+ash | Almquist Shell | BSD
+dash | Debian | GPL-2.0
+
+# Secure Boot / Trusted Execution / TPM
+secureboot | UEFI Forum | Proprietary
+trustzone | ARM | Proprietary
+tpm2 | TCG | BSD
+optee | Linaro | BSD-2-Clause
+uefi | UEFI Forum | Proprietary
+measuredboot | Intel | Unknown
+coreboot | Coreboot.org | GPL-2.0
+yubihsm | Yubico | Proprietary
+openplatformtrust | Intel | Unknown
+
+# Crypto Libraries (Military Use)
+openssl | OpenSSL Foundation | Apache-2.0
+libssl | OpenSSL Foundation | Apache-2.0
+wolfssl | wolfSSL Inc. | GPL-2.0 or Commercial
+mbedtls | ARM | Apache-2.0
+libgcrypt | GNUPG | LGPL-2.1
+botan | Jack Lloyd | BSD-2-Clause
+nss | Mozilla | MPL-2.0
+libsodium | Frank Denis | ISC
+libhydrogen | Frank Denis | ISC
+cryptsetup | Red Hat | GPL-2.0
+pkcs11-helper | Aris Adamantiadis | BSD
+
+# Logging / Forensics / Audit
+syslog-ng | Balabit | GPL-2.0
+rsyslog | Adiscon | GPL-3.0
+auditd | Linux Audit | GPL-2.0
+journald | systemd | LGPL-2.1
+logrotate | Red Hat | GPL-2.0
+klogd | Linux Kernel | GPL-2.0
+tcpdump | tcpdump.org | BSD-3-Clause
+busybox-logger | BusyBox Project | GPL-2.0
+
+# Command & Control Frameworks / Tools
+openatc | OpenATC.org | GPL-3.0
+openuds | OpenUDS | GPL-3.0
+satctrl | Custom | Unknown
+bss-gnss | ISRO | Unknown
+groundseg | ESA | Unknown
+tactools | Custom | Unknown
+satcomcli | Custom | Unknown
+telesat-utils | Custom | Unknown
+
+# AI/ML / Image Processing (UAV/Radar)
+opencv | OpenCV.org | Apache-2.0
+darknet | Joseph Redmon | Public Domain
+tinyyolo | Joseph Redmon | Public Domain
+libtorch | PyTorch | BSD
+ncnn | Tencent | BSD-3-Clause
+tflite | Google | Apache-2.0
+onnxruntime | Microsoft | MIT
+dlstreamer | Intel | Apache-2.0
+dlib | Davis King | BSL
+opencv-contrib | OpenCV.org | Apache-2.0
+vitis-ai | AMD/Xilinx | Apache-2.0
+zbar | Jeff Brown | LGPL-2.1
+vlfeat | Andrea Vedaldi | BSD
+gdal | Open Source Geospatial Foundation | MIT
+libgeotiff | GeoTIFF.org | MIT
+
+# Web, REST, RPC (used in embedded UIs or comms)
+libmicrohttpd | GNU | LGPL-2.1
+mongoose | Cesanta | MIT
+civetweb | Civetweb.org | MIT
+lighttpd | Jan Kneschke | BSD
+tinyhttp | Node.js | MIT
+thttpd | ACME Labs | BSD
+json-c | json-c team | MIT
+protobuf | Google | BSD-3-Clause
+capnproto | Kenton Varda | MIT
+msgpack | MessagePack.org | Apache-2.0
+grpc | Google | Apache-2.0
+nanopb | Petteri Aimonen | Zlib
+
+# Misc Tools
+sqlite | SQLite Consortium | Public Domain
+curl | curl.se | MIT
+wget | GNU | GPL-3.0
+libcurl | curl.se | MIT
+libxml2 | GNOME | MIT
+libexpat | Expat Team | MIT
+libjson | Unknown | MIT
+zlib | Jean-loup Gailly & Mark Adler | zlib
+libpng | PNG Group | libpng
+libjpeg | IJG | BSD
+libwebp | Google | BSD
+libtiff | libtiff.org | BSD
+libffi | GNU | MIT
+libusb | libusb.org | LGPL-2.1
+libftdi | Intra2net | LGPL-2.1
+openocd | OpenOCD | GPL-2.0
