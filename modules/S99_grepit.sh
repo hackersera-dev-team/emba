@@ -5066,3 +5066,21 @@ grepit_module_general() {
   "7_general_sleep_generic.txt" \
   "-i"
 }
+
+grepit_module_sbom_openssl() {
+  print_output "[*] Starting Grepit SBOM OpenSSL module" "no_log"
+
+  # Regex to match both OpenSSL and libssl with versions
+  local regex_openssl='"name"[[:space:]]*:[[:space:]]*"openssl"[[:space:]]*,[[:space:]]*"version"[[:space:]]*:[[:space:]]*"[^"]+"'
+  local regex_libssl='"name"[[:space:]]*:[[:space:]]*"libssl"[[:space:]]*,[[:space:]]*"version"[[:space:]]*:[[:space:]]*"[^"]+"'
+
+  grepit_search \
+    "SBOM-style OpenSSL/libssl entries" \
+    '"name": "openssl", "version":' \
+    '"name": "libssl", "version":' \
+    "${regex_openssl}" \
+    "${regex_libssl}" \
+    "1_sbom_openssl_version.txt" \
+    "-i"
+}
+
