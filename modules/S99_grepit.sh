@@ -5073,8 +5073,8 @@ grepit_version_extract() {
   local OUTFILE="$3"
   local DETECTION="$4"
   local SAMPLE="$5"
-  local VERSION_JSON_TEMP="${LOG_DIR}/grepit_versions_combined.json.tmp"
 
+  local VERSION_JSON_TEMP="${LOG_DIR}/grepit_versions_combined.json.tmp"
   local CUSTOM_LIST="${TOOL_PATH}/external/component_list/custom_component_list_defense.txt"
   local NVD_LIST="${TOOL_PATH}/external/component_list/nvd_product_list.txt"
 
@@ -5086,11 +5086,12 @@ grepit_version_extract() {
     "${OUTFILE}" \
     "-i"
 
+  local OUTFILE_PATH="${LOG_PATH_MODULE}/${OUTFILE}"
   local MATCHES
-  MATCHES=$(grep -aPo "${REGEX}" "${LOG_PATH_MODULE}/${OUTFILE}" 2>/dev/null | sort -u)
+  MATCHES=$(grep -aPo "${REGEX}" "${OUTFILE_PATH}" 2>/dev/null | sort -u)
 
   if [[ -n "${MATCHES}" ]]; then
-    while read -r VER; do
+    while IFS= read -r VER; do
       [[ -z "$VER" ]] && continue
       local DEDUP_KEY="${NAME}::${VER}"
       if grep -q "\"${NAME}\".*\"${VER}\"" "${VERSION_JSON_TEMP}" 2>/dev/null; then
@@ -5101,7 +5102,7 @@ grepit_version_extract() {
       local license="Unknown"
       local entry=""
 
-      # First: check in enriched custom list
+      # Custom list check
       if [[ -f "$CUSTOM_LIST" ]]; then
         entry=$(grep -i -E "^${NAME}[[:space:]]*\|" "$CUSTOM_LIST" | head -n1)
         if [[ -n "$entry" ]]; then
@@ -5110,7 +5111,7 @@ grepit_version_extract() {
         fi
       fi
 
-      # Second: fallback to vendor from NVD if still unknown
+      # NVD list fallback
       if [[ "$vendor" == "Unknown" && -f "$NVD_LIST" ]]; then
         entry=$(grep -i -E "^${NAME}[[:space:]]*\|" "$NVD_LIST" | head -n1)
         if [[ -n "$entry" ]]; then
@@ -5130,30 +5131,31 @@ grepit_version_extract() {
   fi
 }
 
-
 grepit_module_defense() {
   print_output "[*] Starting Grepit Defense module"
 
   : "${TOOL_PATH:=/home/vikash/tools/emba}"
 
+  local LOG_DIR="${LOG_DIR:-/tmp/emba_logs}"      # Set default if not defined
+  local LOG_PATH_MODULE="${LOG_PATH_MODULE:-${LOG_DIR}}"  # Use LOG_DIR as fallback
+  local CUSTOM_LIST="${TOOL_PATH}/external/component_list/custom_component_list_defense.txt"
+  local NVD_LIST="${TOOL_PATH}/external/component_list/nvd_product_list.txt"
+
   local VERSION_JSON_OUT="${LOG_DIR}/grepit_versions_combined.json"
   local VERSION_JSON_TEMP="${VERSION_JSON_OUT}.tmp"
   : > "${VERSION_JSON_TEMP}"  # Clear temp JSON buffer
 
-  local CUSTOM_LIST="${TOOL_PATH}/external/component_list/custom_component_list_defense.txt"
-  local NVD_LIST="${TOOL_PATH}/external/component_list/nvd_product_list.txt"
-
-  # === Backdoor Detection ===
+  # === Backdoor Detection (unchanged) ===
   grepit_search \
     "Drone/MIL backdoor trigger keywords" \
     '[Backdoor Triggered] UID:' \
     'debug log with UID shown' \
-    "fieldop|milops#2025|/etc/init.d/.remote_init|remote shell|nc[\s-]+l[\s-]+p[\s0-9]+[\s-]+e[\s-]+/bin/sh|reboot -f|back.{0,${WILDCARD_SHORT}}door|Actuating flaps|EMERGENCY OVERRIDE" \
+    "fieldop|milops#2025|/etc/init.d/.remote_init|remote shell|nc[\s-]+l[\s-]+p[\s0-9]+[\s-]+e[\s-]+/bin/sh|reboot -f|back.{0,8}door|Actuating flaps|EMERGENCY OVERRIDE" \
     "3_mil_backdoor.txt" \
     "-i"
 
   # === Static Component Pattern Table ===
-  local -A COMPONENT_PATTERNS=(
+  declare -A COMPONENT_PATTERNS=(
     [busybox]='(?i)busybox[ _-]?v?([0-9]+\.[0-9]+\.[0-9]+)'
     [openssl]='(?i)openssl[ _-]?([0-9]+\.[0-9]+\.[0-9]+[a-z]?)'
     [libssl]='libssl\.so\.([0-9]+\.[0-9]+\.[0-9][a-z]?)'
@@ -5182,7 +5184,7 @@ grepit_module_defense() {
     grepit_version_extract "${component}" "${regex}" "${outfile}" "grepit" "${component}"
   done
 
-  # === Dynamic Scan: custom_component_list_defense.txt
+  # === Dynamic Scan: custom_component_list_defense.txt ===
   if [[ -f "$CUSTOM_LIST" ]]; then
     while IFS='|' read -r name _ _; do
       name=$(echo "$name" | xargs)
@@ -5193,7 +5195,7 @@ grepit_module_defense() {
     done < "$CUSTOM_LIST"
   fi
 
-  # === Dynamic Scan: nvd_product_list.txt
+  # === Dynamic Scan: nvd_product_list.txt ===
   if [[ -f "$NVD_LIST" ]]; then
     while IFS='|' read -r name _; do
       name=$(echo "$name" | xargs)
