@@ -5067,20 +5067,177 @@ grepit_module_general() {
   "-i"
 }
 
-grepit_module_sbom_openssl() {
-  print_output "[*] Starting Grepit SBOM OpenSSL module" "no_log"
+grepit_version_extract() {
+  local NAME="$1"
+  local REGEX="$2"
+  local OUTFILE="$3"
+  local DETECTION="$4"
+  local SAMPLE="$5"
+  local VERSION_JSON_TEMP="${LOG_DIR}/grepit_versions_combined.json.tmp"
 
-  # Regex to match both OpenSSL and libssl with versions
-  local regex_openssl='"name"[[:space:]]*:[[:space:]]*"openssl"[[:space:]]*,[[:space:]]*"version"[[:space:]]*:[[:space:]]*"[^"]+"'
-  local regex_libssl='"name"[[:space:]]*:[[:space:]]*"libssl"[[:space:]]*,[[:space:]]*"version"[[:space:]]*:[[:space:]]*"[^"]+"'
+  local CUSTOM_LIST="${TOOL_PATH}/external/component_list/custom_component_list_defense.txt"
+  local NVD_LIST="${TOOL_PATH}/external/component_list/nvd_product_list.txt"
 
   grepit_search \
-    "SBOM-style OpenSSL/libssl entries" \
-    '"name": "openssl", "version":' \
-    '"name": "libssl", "version":' \
-    "${regex_openssl}" \
-    "${regex_libssl}" \
-    "1_sbom_openssl_version.txt" \
+    "${NAME} version pattern" \
+    "${SAMPLE}" \
+    "binary strings, ELF symbols or banner" \
+    "${REGEX}" \
+    "${OUTFILE}" \
     "-i"
+
+  local MATCHES
+  MATCHES=$(grep -aPo "${REGEX}" "${LOG_PATH_MODULE}/${OUTFILE}" 2>/dev/null | sort -u)
+
+  if [[ -n "${MATCHES}" ]]; then
+    while read -r VER; do
+      [[ -z "$VER" ]] && continue
+      local DEDUP_KEY="${NAME}::${VER}"
+      if grep -q "\"${NAME}\".*\"${VER}\"" "${VERSION_JSON_TEMP}" 2>/dev/null; then
+        continue
+      fi
+
+      local vendor="Unknown"
+      local license="Unknown"
+      local entry=""
+
+      # First: check in enriched custom list
+      if [[ -f "$CUSTOM_LIST" ]]; then
+        entry=$(grep -i -E "^${NAME}[[:space:]]*\|" "$CUSTOM_LIST" | head -n1)
+        if [[ -n "$entry" ]]; then
+          vendor=$(echo "$entry" | cut -d'|' -f2 | xargs)
+          license=$(echo "$entry" | cut -d'|' -f3 | xargs)
+        fi
+      fi
+
+      # Second: fallback to vendor from NVD if still unknown
+      if [[ "$vendor" == "Unknown" && -f "$NVD_LIST" ]]; then
+        entry=$(grep -i -E "^${NAME}[[:space:]]*\|" "$NVD_LIST" | head -n1)
+        if [[ -n "$entry" ]]; then
+          vendor=$(echo "$entry" | cut -d'|' -f2 | xargs)
+        fi
+      fi
+
+      jq -n \
+        --arg name "${NAME}" \
+        --arg version "${VER}" \
+        --arg vendor "${vendor}" \
+        --arg license "${license}" \
+        --arg detection "${DETECTION}" \
+        '{component: $name, version: $version, vendor: $vendor, license: $license, detection: $detection}' \
+        >> "${VERSION_JSON_TEMP}"
+    done <<< "${MATCHES}"
+  fi
+}
+
+
+grepit_module_defense() {
+  print_output "[*] Starting Grepit Defense module"
+
+  : "${TOOL_PATH:=/home/vikash/tools/emba}"
+
+  local VERSION_JSON_OUT="${LOG_DIR}/grepit_versions_combined.json"
+  local VERSION_JSON_TEMP="${VERSION_JSON_OUT}.tmp"
+  : > "${VERSION_JSON_TEMP}"  # Clear temp JSON buffer
+
+  local CUSTOM_LIST="${TOOL_PATH}/external/component_list/custom_component_list_defense.txt"
+  local NVD_LIST="${TOOL_PATH}/external/component_list/nvd_product_list.txt"
+
+  # === Backdoor Detection ===
+  grepit_search \
+    "Drone/MIL backdoor trigger keywords" \
+    '[Backdoor Triggered] UID:' \
+    'debug log with UID shown' \
+    "fieldop|milops#2025|/etc/init.d/.remote_init|remote shell|nc[\s-]+l[\s-]+p[\s0-9]+[\s-]+e[\s-]+/bin/sh|reboot -f|back.{0,${WILDCARD_SHORT}}door|Actuating flaps|EMERGENCY OVERRIDE" \
+    "3_mil_backdoor.txt" \
+    "-i"
+
+  # === Static Component Pattern Table ===
+  local -A COMPONENT_PATTERNS=(
+    [busybox]='(?i)busybox[ _-]?v?([0-9]+\.[0-9]+\.[0-9]+)'
+    [openssl]='(?i)openssl[ _-]?([0-9]+\.[0-9]+\.[0-9]+[a-z]?)'
+    [libssl]='libssl\.so\.([0-9]+\.[0-9]+\.[0-9][a-z]?)'
+    [uclibc]='(?i)uclibc[ _-]?v?([0-9]+\.[0-9]+\.[0-9]+)'
+    [dropbear]='(?i)dropbear[ _-]?v?([0-9]{4}\.[0-9]+)'
+    [glibc]='GLIBC_([0-9]+\.[0-9]+)'
+    [libc]='(?i)libc[ _-]?v?([0-9]+\.[0-9]+)'
+    [libm]='(?i)libm[ _-]?([0-9]+\.[0-9]+)'
+    [libpthread]='(?i)libpthread[ _-]?([0-9]+\.[0-9]+)'
+    [libz]='(?i)libz[ _-]?([0-9]+\.[0-9]+)'
+    [libcrypto]='(?i)libcrypto[ _-]?([0-9]+\.[0-9]+\.[0-9]+[a-z]?)'
+    [libcurl]='(?i)libcurl[ _-]?([0-9]+\.[0-9]+\.[0-9]+)'
+    [libexpat]='(?i)libexpat[ _-]?([0-9]+\.[0-9]+\.[0-9]+)'
+    [libpng]='(?i)libpng[ _-]?([0-9]+\.[0-9]+\.[0-9]+)'
+    [libjpeg]='(?i)libjpeg[ _-]?([0-9]+[a-z]?)'
+    [libwebp]='(?i)libwebp[ _-]?([0-9]+\.[0-9]+\.[0-9]+)'
+    [libtiff]='(?i)libtiff[ _-]?([0-9]+\.[0-9]+\.[0-9]+)'
+    [libsqlite3]='(?i)libsqlite3[ _-]?([0-9]+\.[0-9]+\.[0-9]+)'
+    [libxml2]='(?i)libxml2[ _-]?([0-9]+\.[0-9]+\.[0-9]+)'
+    [libffi]='(?i)libffi[ _-]?([0-9]+\.[0-9]+)'
+  )
+
+  for component in "${!COMPONENT_PATTERNS[@]}"; do
+    local regex="${COMPONENT_PATTERNS[$component]}"
+    local outfile="3_mil_${component}_version.txt"
+    grepit_version_extract "${component}" "${regex}" "${outfile}" "grepit" "${component}"
+  done
+
+  # === Dynamic Scan: custom_component_list_defense.txt
+  if [[ -f "$CUSTOM_LIST" ]]; then
+    while IFS='|' read -r name _ _; do
+      name=$(echo "$name" | xargs)
+      [[ -z "$name" || "$name" =~ ^# ]] && continue
+      local regex="(?i)${name}[ /:_-]*v?([0-9]+\.[0-9]+(\.[0-9a-zA-Z]+)?)"
+      local outfile="3_mil_dyn_custom_${name}_version.txt"
+      grepit_version_extract "$name" "$regex" "$outfile" "grepit_list" "$name"
+    done < "$CUSTOM_LIST"
+  fi
+
+  # === Dynamic Scan: nvd_product_list.txt
+  if [[ -f "$NVD_LIST" ]]; then
+    while IFS='|' read -r name _; do
+      name=$(echo "$name" | xargs)
+      [[ -z "$name" || "$name" =~ ^# ]] && continue
+      local regex="(?i)${name}[ /:_-]*v?([0-9]+\.[0-9]+(\.[0-9a-zA-Z]+)?)"
+      local outfile="3_mil_dyn_nvd_${name}_version.txt"
+      grepit_version_extract "$name" "$regex" "$outfile" "grepit_nvd" "$name"
+    done < "$NVD_LIST"
+  fi
+
+  # === Embedded SBOM JSON Parsing ===
+  local EMBEDDED_JSON_FILE="3_mil_embedded_sbom.json"
+  local EMBEDDED_REGEX='"name"\s*:\s*"([^"]+)"\s*,\s*"version"\s*:\s*"([^"]+)"'
+
+  grepit_search \
+    "Embedded SBOM JSON components" \
+    '"name": "busybox", "version": "1.35.0"' \
+    'JSON section in firmware' \
+    "${EMBEDDED_REGEX}" \
+    "${EMBEDDED_JSON_FILE}" \
+    "-i"
+
+  if [[ -f "${LOG_PATH_MODULE}/${EMBEDDED_JSON_FILE}" ]]; then
+    grep -aPo "${EMBEDDED_REGEX}" "${LOG_PATH_MODULE}/${EMBEDDED_JSON_FILE}" | while read -r line; do
+      local name version
+      name=$(echo "$line" | grep -oP '"name"\s*:\s*"\K[^"]+')
+      version=$(echo "$line" | grep -oP '"version"\s*:\s*"\K[^"]+')
+      [[ -n "$name" && -n "$version" ]] || continue
+      grep -q "\"${name}\".*\"${version}\"" "${VERSION_JSON_TEMP}" 2>/dev/null && continue
+      jq -n \
+        --arg name "$name" \
+        --arg version "$version" \
+        --arg detection "embedded_sbom_json" \
+        '{component: $name, version: $version, vendor: "Unknown", license: "Unknown", detection: $detection}' \
+        >> "${VERSION_JSON_TEMP}"
+    done
+  fi
+
+  # === Finalize Output ===
+  if [[ -s "${VERSION_JSON_TEMP}" ]]; then
+    jq -s '.' "${VERSION_JSON_TEMP}" > "${VERSION_JSON_OUT}" && rm -f "${VERSION_JSON_TEMP}"
+    print_output "[+] Combined Grepit SBOM JSON saved to: ${VERSION_JSON_OUT}"
+  else
+    rm -f "${VERSION_JSON_TEMP}" "${VERSION_JSON_OUT}"
+  fi
 }
 
